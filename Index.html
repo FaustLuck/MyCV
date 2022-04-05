@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/cube.css">
+</head>
+
+<body>
+    <header>
+        <nav class="menu">
+            <div class="menu__inner">
+                <ul class="menu__inner_navigation">
+                    <li><a class="menu__item" href="#about">Обо мне</a></li>
+                    <li><a class="menu__item" href="#hobbies">Мои увлечения</a></li>
+                    <li><a class="menu__item" href="#examples">Примеры работ</a></li>
+                    <li><a class="menu__item" href="#contacts">Контакты</a></li>
+                </ul>
+                <hr>
+                <h2>Связаться со мной:</h2>
+                <ul>
+                    <li class="contacts__item"><a href="https://t.me/faustluck" target="_blank"><img
+                                class="contacts__item_logo" src="assets\icons\Telegram.svg"
+                                alt="Ссылка на мой телеграмм">Телеграм</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="overley"></div>
+    </header>
+    <div class="theme" ><img class="theme__icon" src="./assets/icons/dark.svg" alt=""></div>
+    <section class="title" id="top">
+        <img class="avatar" src="./assets/image/avatar.jpg">
+        <h1 class="main__title">
+            Добро пожаловать!
+        </h1>
+
+    </section>
+    <section id="about">
+        <h2>Кратко обо мне</h2>
+        <p>
+            Меня зовут, Владимир и у меня нет опыта коммерческой верстки.
+            Зато у меня есть огромное желание верстать.</p>
+        <figure>
+            <blockquote>Я такой человек, что если задать мне вопрос, на который я не знаю ответа, я отвечу, что не знаю.
+                Но, поверьте, я знаю как его найти, этот ответ, и я его найду. Разве это не главное?</blockquote>
+            <figcaption>© В погоне за счастьем</figcaption>
+        </figure>
+        С дизайном у меня все плохо, но если есть макет в Figma (или Photoshop) я смогу по нему сделать верстку и
+        адаптировать её.
+        <p>
+            Во время пандемии попал под сокращение. Не хотел заразиться, поэтому решил отсидеться дома и в людных местах
+            появляться как можно реже.</p>
+        <p>
+            Сидеть дома, ничего не делая, не смог. В подборке Youtube случайно попалось видео с процессом верстки
+            лендинга.
+            Решил параллельно с автором тоже верстать и...</p>
+        <p>
+            И мне это затянуло, после чего стал искать информацию по frontend уже целенаправленно, что в конечном итоге
+            привело меня на канал <a href="https://www.youtube.com/c/VladilenMinin" _blank>Владилена</a>
+        </p>
+        <h2>Опыт работы</h2>
+        <table>
+            <thead>
+                <tr>
+                    <td>Название</td>
+                    <td>Должность</td>
+                    <td>Год</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Читай-город</td>
+                    <td>Кладовщик</td>
+                    <td>2012-2013</td>
+                </tr>
+                <tr>
+                    <td>АТОЛ</td>
+                    <td>Кладовщик</td>
+                    <td>2013-2015</td>
+                </tr>
+                <tr>
+                    <td>АТОЛ</td>
+                    <td>Инженер производства</td>
+                    <td>2015-2020</td>
+                </tr>
+                <tr>
+                    <td>AB-Batteries</td>
+                    <td>Кладовщик</td>
+                    <td>2021-сейчас</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section id="hobbies">
+        <h2>Мои увлечения:</h2>
+        <ul>
+            <li>Программирование</li>
+            <li>Прогулки на свежем воздухе</li>
+            <li>TV</li>
+            <li>Игры</li>
+        </ul>
+    </section>
+    <div class="container">
+        <div class="webpack__logo">
+            <div class="cube__outer">
+                <div class="outer front">
+                    <img class="js" src="./assets/icons/js.svg">
+                </div>
+                <div class="outer back">
+                    <img class="js" src="./assets/icons/js.svg">
+                </div>
+                <div class="outer left">
+                    <img class="sass" src="./assets/icons/css3.svg">
+                </div>
+                <div class="outer right">
+                    <img class="sass" src="./assets/icons/css3.svg">
+                </div>
+                <div class="outer top">
+                    <div class="logo__container_html">
+                        <img class="html" src="./assets/icons/html5.svg">
+                    </div>
+                </div>
+                <div class="outer bottom"></div>
+            </div>
+            <div class="cube__inner">
+                <div class="inner front"></div>
+                <div class="inner back"></div>
+                <div class="inner left"></div>
+                <div class="inner right"></div>
+                <div class="inner top"></div>
+                <div class="inner bottom"></div>
+            </div>
+        </div>
+    </div>
+    <section id="examples">
+        <h2>Примеры работ:</h2>
+        <ul>
+            <li><a href="https://faustluck.github.io/MoGo/index.html" _blank>MoGo</a> <a
+                    href="https://freebiesbug.com/psd-freebies/mogo-free-one-page-psd-template/" _blank>Макет</a></li>
+        </ul>
+    </section>
+    <footer id="contacts">
+        <h2>Связаться со мной:</h2>
+        <ul>
+            <li class="contacts__item"><a href="https://t.me/faustluck" target="_blank"><img class="contacts__item_logo"
+                        src="assets\icons\Telegram.svg" alt="Ссылка на мой телеграмм">Телеграм</a></li>
+        </ul>
+        <h3>Форма обратной связи</h3>
+        <form action="submit" name="message">
+            <div>
+                <label>Ваше имя:
+                    <input type="text" placeholder="Введите имя..." required>
+                </label>
+            </div>
+            <div>
+                <label>Ваш Email:
+                    <input type="email" placeholder="Введите email..." required>
+                </label>
+            </div>
+            <div>
+                <label>Ваше сообщение:
+                    <textarea cols="15" rows="10" required></textarea>
+                </label>
+            </div>
+            <input type="button" value="Отправить">
+
+
+
+        </form>
+    </footer>
+    <script src="./assets/js.js" defer></script>
+</body>
+
+</html>
