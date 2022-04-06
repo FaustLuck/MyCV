@@ -205,20 +205,19 @@ input[type="submit"] {
 /* EXPERIENCE */
 
 .experience {
- /*   background-color: rgb(30, 21, 4 );*/
-    
+    /*   background-color: rgb(30, 21, 4 );*/
 }
 
 .experience thead {
     background-color: rgb(157, 114, 32);
 }
-.experience tbody{
+.experience tbody {
     background-color: rgb(228, 177, 78);
 }
 
-.experience td{
-padding-top: .5rem;
-border-color: black;
+.experience td {
+    padding-top: 0.5rem;
+    border-color: black;
 }
 
 /* EXAMPLES */
@@ -260,4 +259,10 @@ border-color: black;
     display: block;
     margin: 0 auto;
     width: 90%;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: rgb(6, 5, 2);
+    }
 }
