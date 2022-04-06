@@ -11,7 +11,7 @@ body {
 
 body {
     background: url(image/backgrounds/Welcome-small.jpg) no-repeat;
-    background-color: rgba(228, 177, 78, 1);
+    background-color: rgba(233, 208, 161, 1);
     background-size: cover;
     background-blend-mode: soft-light;
     background-attachment: fixed;
@@ -31,15 +31,36 @@ h2 {
     text-align: center;
 }
 
+p {
+    text-indent: 2rem;
+}
+
 figure {
     margin: 0;
-    background-color: rgba(228, 177, 78, .8);
+    background-color: rgba(228, 177, 78, 0.8);
     padding-left: 1rem;
+    margin: 0.25rem 0;
 }
 
 blockquote {
     margin: 0;
-    
+    width: 100%;
+}
+
+figcaption {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+    font-weight: bold;
+}
+
+textarea {
+    width: 90%;
+}
+
+input[type="submit"] {
+    height: 2rem;
+    margin: 1rem 0;
 }
 
 /* HEADER */
@@ -152,7 +173,7 @@ blockquote {
     border-style: none;
 }
 
-.menu.open > .menu__inner {
+.menu.open .menu__inner {
     display: block;
 }
 
@@ -181,7 +202,32 @@ blockquote {
     align-self: center;
 }
 
-/* ABOUT */
+/* EXPERIENCE */
+
+.experience {
+ /*   background-color: rgb(30, 21, 4 );*/
+    
+}
+
+.experience thead {
+    background-color: rgb(157, 114, 32);
+}
+.experience tbody{
+    background-color: rgb(228, 177, 78);
+}
+
+.experience td{
+padding-top: .5rem;
+border-color: black;
+}
+
+/* EXAMPLES */
+
+.examples__item {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+}
 
 /* CONTACTS */
 
@@ -193,4 +239,25 @@ blockquote {
 
 .contacts__item_logo {
     height: 2rem;
+}
+
+.field {
+    padding-bottom: 0.5rem;
+}
+
+.field label {
+    display: block;
+    float: left;
+    width: 7rem;
+    height: 1rem;
+}
+
+.message {
+    width: 100%;
+}
+
+.message * {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
 }
