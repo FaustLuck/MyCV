@@ -1,0 +1,32 @@
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: rgb(233, 208, 161);
+    color: black;
+  }
+  figure {
+    background-color: rgba(228, 177, 78, 0.8);
+  }
+
+  .menu {
+    background-color: rgb(228, 177, 78);
+    box-shadow: 0.25rem 0 1.25rem 1rem black;
+  }
+  .overley {
+    background-color: rgb(196, 196, 196);
+  }
+
+  .menu__item:hover {
+    color: rgb(0, 0, 255);
+  }
+
+  .menu__item::after {
+    background-color: rgb(0, 0, 255);
+  }
+
+  .experience thead {
+    background-color: rgb(157, 114, 32);
+}
+.experience tbody {
+    background-color: rgb(228, 177, 78);
+}
+}

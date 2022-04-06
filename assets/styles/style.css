@@ -1,20 +1,27 @@
 /* COMMON */
 
-html,
 body {
     padding: 0;
     margin: 0;
     font: 16px/20px "Roboto", sans-serif;
-    color: #000000;
     width: 100%;
 }
 
 body {
-    background: url(image/backgrounds/Welcome-small.jpg) no-repeat;
-    background-color: rgba(233, 208, 161, 1);
+    background: url(../image/backgrounds/Welcome-small.jpg) no-repeat;
     background-size: cover;
     background-blend-mode: soft-light;
     background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+section,
+footer {
+    width: 100%;
+    max-width: 800px;
+    align-self: center;
 }
 
 img {
@@ -27,7 +34,8 @@ a {
     align-items: center;
 }
 
-h2 {
+h2,
+h3 {
     text-align: center;
 }
 
@@ -37,7 +45,6 @@ p {
 
 figure {
     margin: 0;
-    background-color: rgba(228, 177, 78, 0.8);
     padding-left: 1rem;
     margin: 0.25rem 0;
 }
@@ -45,6 +52,10 @@ figure {
 blockquote {
     margin: 0;
     width: 100%;
+}
+
+form{
+    max-width: 600px;
 }
 
 figcaption {
@@ -63,6 +74,10 @@ input[type="submit"] {
     margin: 1rem 0;
 }
 
+a {
+    font-weight: 400;
+}
+
 /* HEADER */
 
 .menu {
@@ -71,18 +86,15 @@ input[type="submit"] {
     right: -4.5rem;
     width: 9rem;
     height: 9rem;
-    background-color: #e4b14e;
     border-bottom-left-radius: 50%;
     z-index: 100;
     cursor: pointer;
-    box-shadow: 0.25rem 0 1.25rem black;
     transition: all 0.2s linear;
 }
 
 .overley {
     position: fixed;
     z-index: 10;
-    background-color: #c4c4c4;
     opacity: 0;
     width: 0;
     height: 100%;
@@ -130,15 +142,10 @@ input[type="submit"] {
     transition: color 0.3s linear;
 }
 
-.menu__item:hover {
-    color: blue;
-}
-
 .menu__item::after {
     content: "";
     width: 5rem;
     height: 0;
-    background-color: blue;
     position: absolute;
     top: 100%;
     transition: height 0.2s linear;
@@ -204,20 +211,14 @@ input[type="submit"] {
 
 /* EXPERIENCE */
 
-.experience {
-    /*   background-color: rgb(30, 21, 4 );*/
-}
-
-.experience thead {
-    background-color: rgb(157, 114, 32);
-}
-.experience tbody {
-    background-color: rgb(228, 177, 78);
+.table__wrapper {
+    display: flex;
+    justify-content: center;
 }
 
 .experience td {
     padding-top: 0.5rem;
-    border-color: black;
+    text-align: center;
 }
 
 /* EXAMPLES */
@@ -261,8 +262,18 @@ input[type="submit"] {
     width: 90%;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (min-width: 768px) {
     body {
-        background-color: rgb(6, 5, 2);
+      background: url(../image/backgrounds/Welcome-medium.jpg) no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
     }
-}
+  }
+  
+  @media (min-width: 1200px) {
+    body {
+      background: url(../image/backgrounds/Welcome-large.jpg) no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+  }

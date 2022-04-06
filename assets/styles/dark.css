@@ -1,0 +1,38 @@
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(6, 5, 2);
+    color: white;
+  }
+  figure {
+    background-color: rgba(25, 31, 41, 0.8);
+  }
+
+  a {
+    color: white;
+  }
+
+  .menu {
+    background-color: rgb(63, 78, 106);
+    box-shadow: 0.25rem 0 1.25rem 1rem rgb(63, 78, 106);
+  }
+  .overley {
+    background-color: rgb(33, 38, 49);
+  }
+
+  .menu__item:hover {
+    color: rgb(255, 0, 0);
+  }
+
+  .menu__item::after {
+    background-color: rgb(255, 0, 0);
+  }
+  .experience {
+    background-color: rgba(228, 177, 78, 0.8);
+  }
+  .experience thead {
+    background-color: rgb(63, 78, 106);
+  }
+  .experience tbody {
+    background-color: rgb(25, 31, 41);
+  }
+}

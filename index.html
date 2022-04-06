@@ -9,8 +9,10 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/style.css">
-  <link rel="stylesheet" href="assets/cube.css">
+  <link rel="stylesheet" href="./assets/styles/style.css">
+  <link rel="stylesheet" href="./assets/styles/light.css">
+  <link rel="stylesheet" href="./assets/styles/dark.css">
+  <link rel="stylesheet" href="./assets/styles/cube.css">
 </head>
 
 <body>
@@ -34,6 +36,11 @@
           <li class="contacts__item">
             <a href="https://t.me/faustluck" target="_blank">
               <img class="contacts__item_logo" src="./assets/icons/Telegram.svg" alt="Ссылка на мой телеграмм">Телеграм
+            </a>
+          </li>
+          <li class="contacts__item">
+            <a href="https://github.com/FaustLuck" target="_blank">
+              <img class="contacts__item_logo" src="./assets/icons/github-dark.svg" alt="Ссылка на мой Github">Github
             </a>
           </li>
         </ul>
@@ -70,41 +77,43 @@
       лендинга.
       Решил параллельно с автором тоже верстать и...</p>
     <p>
-      И мне это затянуло, после чего стал искать информацию по frontend уже целенаправленно, что в конечном итоге
+      И меня это затянуло, после чего стал искать информацию по frontend уже целенаправленно, что в конечном итоге
       привело меня на канал Владилена.
     </p>
     <h2>Опыт работы</h2>
-    <table class="experience">
-      <thead>
-        <tr>
-          <th>Название</th>
-          <th>Должность</th>
-          <th>Год</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Читай-город</td>
-          <td>Кладовщик</td>
-          <td>2012-2013</td>
-        </tr>
-        <tr>
-          <td>АТОЛ</td>
-          <td>Кладовщик</td>
-          <td>2013-2015</td>
-        </tr>
-        <tr>
-          <td>АТОЛ</td>
-          <td>Инженер производства</td>
-          <td>2015-2020</td>
-        </tr>
-        <tr>
-          <td>AB-Batteries</td>
-          <td>Кладовщик</td>
-          <td>2021-сейчас</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table__wrapper">
+      <table class="experience">
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th>Должность</th>
+            <th>Год</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Читай-город</td>
+            <td>Кладовщик</td>
+            <td>2012-2013</td>
+          </tr>
+          <tr>
+            <td>АТОЛ</td>
+            <td>Кладовщик</td>
+            <td>2013-2015</td>
+          </tr>
+          <tr>
+            <td>АТОЛ</td>
+            <td>Инженер производства</td>
+            <td>2015-2020</td>
+          </tr>
+          <tr>
+            <td>AB-Batteries</td>
+            <td>Кладовщик</td>
+            <td>2021-сейчас</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
   <section id="hobbies">
     <h2>Мои увлечения:</h2>
@@ -115,7 +124,7 @@
       <li>Игры</li>
     </ul>
   </section>
-  <div class="container">
+  <section class="container">
     <div class="webpack__logo">
       <div class="cube__outer">
         <div class="outer front">
@@ -146,7 +155,7 @@
         <div class="inner bottom"></div>
       </div>
     </div>
-  </div>
+  </section>
   <section id="examples">
     <h2>Примеры работ:</h2>
     <ul>
@@ -167,8 +176,15 @@
   <footer id="contacts">
     <h2>Связаться со мной:</h2>
     <ul>
-      <li class="contacts__item"><a href="https://t.me/faustluck" target="_blank"><img class="contacts__item_logo"
-            src="./assets/icons/Telegram.svg" alt="Ссылка на мой телеграмм">Телеграм</a></li>
+      <li class="contacts__item">
+        <a href="https://t.me/faustluck" target="_blank"><img class="contacts__item_logo"
+            src="./assets/icons/Telegram.svg" alt="Ссылка на мой телеграмм">Телеграм</a>
+      </li>
+      <li class="contacts__item">
+        <a href="https://github.com/FaustLuck" target="_blank">
+          <img class="contacts__item_logo" src="./assets/icons/github-dark.svg" alt="Ссылка на мой Github">Github
+        </a>
+      </li>
     </ul>
     <h3>Форма обратной связи</h3>
     <form action="" method="post">
