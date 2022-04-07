@@ -1,38 +1,36 @@
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: rgb(6, 5, 2);
-    color: white;
+    background-color: #060502;
+    color: #fff;
   }
-  figure {
-    background-color: rgba(25, 31, 41, 0.8);
+  .quote {
+    background-color: #191f29cc;
   }
 
   a {
-    color: white;
+    color: #fff;
   }
 
   .menu {
-    background-color: rgb(63, 78, 106);
-    box-shadow: 0.25rem 0 1.25rem 1rem rgb(63, 78, 106);
+    background-color: #3f4e6a;
+    box-shadow: 0.25rem 0 1.25rem 1rem #3f4e6a;
   }
   .overley {
-    background-color: rgb(33, 38, 49);
+    background-color: #212631;
   }
 
   .menu__item:hover {
-    color: rgb(255, 0, 0);
+    color: #f00;
   }
 
   .menu__item::after {
-    background-color: rgb(255, 0, 0);
+    background-color: #f00;
   }
-  .experience {
-    background-color: rgba(228, 177, 78, 0.8);
-  }
+  
   .experience thead {
-    background-color: rgb(63, 78, 106);
+    background-color: #191f29;
   }
   .experience tbody {
-    background-color: rgb(25, 31, 41);
+    background-color: #3f4e6a;
   }
 }

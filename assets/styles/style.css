@@ -38,7 +38,7 @@ p {
     text-indent: 2rem;
 }
 
-figure {
+.quote {
     padding-left: 1rem;
     margin: 0.25rem 0;
 }
