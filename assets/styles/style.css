@@ -9,6 +9,8 @@ body {
     background-blend-mode: soft-light;
     background-attachment: fixed;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 section,
@@ -40,12 +42,7 @@ p {
 }
 
 .quote {
-    padding: 2rem;
-    margin: 0;
-    width: 100%;
-}
-
-blockquote {
+    padding: 2rem 0;
     margin: 0;
     width: 100%;
 }
@@ -103,7 +100,7 @@ a {
     top: 0;
     right: 0;
     width: 80%;
-    height: 100vh;
+    height: 100%;
     border-bottom-left-radius: 0;
     cursor: auto;
 }
@@ -189,7 +186,7 @@ a {
 
 .main__title {
     text-align: center;
-    font-weight: 900;
+    font-weight: 700;
     font-size: 2.5rem;
     line-height: 3rem;
     letter-spacing: 0.2rem;
@@ -260,6 +257,73 @@ a {
         background-size: cover;
         background-attachment: fixed;
     }
+
+    .menu {
+        position: fixed;
+        display: flex;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 4rem;
+        border-bottom-left-radius: 0;
+        z-index: 100;
+        cursor: auto;
+        transition: all 0.2s linear;
+        justify-content: center;
+        box-shadow: none;
+    }
+
+    .menu .contacts__item,
+    .menu hr,
+    .menu h2 {
+        display: none;
+    }
+
+    .menu__inner {
+        height: 100%;
+        font-weight: 700;
+        line-height: 3rem;
+        text-align: center;
+        display: flex;
+        position: relative;
+    }
+
+    .menu__inner_navigation {
+        display: flex;
+    }
+
+    .menu__inner_navigation li {
+        margin: 0 1rem;
+    }
+
+    .menu__item {
+        text-decoration: none;
+        color: black;
+        justify-content: center;
+        position: relative;
+        transition: color 0.3s linear;
+    }
+
+    .theme__wrapper {
+        position: absolute;
+        height: 4rem;
+        width: 4rem;
+        right: 0;
+        top: 0;
+    }
+
+    .theme__icon {
+        height: 50%;
+        width: 50%;
+    }
+
+    .theme:active {
+        border-style: none;
+    }
+
+    .main__title {
+        font-weight: 900;
+    }
 }
 
 @media screen and(min-width: 1200px) {
@@ -271,6 +335,10 @@ a {
 
     p {
         padding: 0;
+    }
+
+    .quote {
+        padding: 2rem;
     }
 }
 
