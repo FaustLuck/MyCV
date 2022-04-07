@@ -140,18 +140,6 @@ a {
     transition: color 0.3s linear;
 }
 
-.menu__item::after {
-    content: "";
-    width: 5rem;
-    height: 0;
-    position: absolute;
-    top: 100%;
-    transition: height 0.2s linear;
-}
-
-.menu__item:hover::after {
-    height: 2px;
-}
 .theme__wrapper {
     position: relative;
     height: 4rem;
@@ -290,5 +278,20 @@ a {
     .title {
         height: 100%;
         margin: 10rem auto;
+    }
+}
+
+@media (any-hover: hover) {
+    .menu__item::after {
+        content: "";
+        width: 5rem;
+        height: 0;
+        position: absolute;
+        top: 100%;
+        transition: height 0.2s linear;
+    }
+
+    .menu__item:hover::after {
+        height: 2px;
     }
 }
