@@ -1,32 +1,44 @@
 @media (prefers-color-scheme: light) {
+  :root {
+    --main_bg_color: #e9d0a1;
+    --text_color: #000;
+    --quote_bg_color: #e4b14ecc;
+    --menu_bg_color: #e4b14e;
+    --overley_color: #c4c4c4;
+    --menu_hover: #00f;
+    --thead_bg_color: #9d7220;
+  }
+
   body {
-    background-color: #e9d0a1;
-    color: #000;
+    background-color: var(--main_bg_color);
+    color: var(--text_color);
   }
   .quote {
     background-color: #e4b14ecc;
   }
 
   .menu {
-    background-color: #e4b14e;
-    box-shadow: 0.25rem 0 1.25rem 1rem #000;
+    background-color: var(--menu_bg_color);
+    box-shadow: 0.25rem 0 1.25rem 1rem var(--text_color);
   }
+
   .overley {
-    background-color: #c4c4c4;
+    background-color: var(--overley_color);
   }
 
   .menu__item:hover {
-    color: #00f;
+    color: var(--menu_hover);
   }
 
   .menu__item::after {
-    background-color: #00f;
+    background-color: var(--menu_hover);
   }
 
   .experience thead {
-    background-color: #9d7220;
+    background-color: var(--thead_bg_color);
   }
+  
   .experience tbody {
-    background-color: #e4b14e;
+    background-color: var(--menu_bg_color);
   }
 }

@@ -1,36 +1,48 @@
 @media (prefers-color-scheme: dark) {
-  body {
-    background-color: #060502;
-    color: #fff;
+  :root {
+    --main_bg_color: #060502;
+    --text_color: #fff;
+    --quote_bg_color: #191f29cc;
+    --menu_bg_color: #3f4e6a;
+    --overley_color: #212631;
+    --menu_hover: #f00;
+    --thead_bg_color: #191f29;
   }
+
+  body {
+    background-color: var(--main_bg_color);
+    color: var(--text_color);
+  }
+
   .quote {
-    background-color: #191f29cc;
+    background-color: #e4b14ecc;
   }
 
   a {
-    color: #fff;
+    color: var(--text_color);
   }
 
   .menu {
-    background-color: #3f4e6a;
-    box-shadow: 0.25rem 0 1.25rem 1rem #3f4e6a;
+    background-color: var(--menu_bg_color);
+    box-shadow: 0.25rem 0 1.25rem 1rem var(--menu_bg_color);
   }
+  
   .overley {
-    background-color: #212631;
+    background-color: var(--overley_color);
   }
 
   .menu__item:hover {
-    color: #f00;
+    color: var(--menu_hover);
   }
 
   .menu__item::after {
-    background-color: #f00;
+    background-color: var(--menu_hover);
   }
-  
+
   .experience thead {
-    background-color: #191f29;
+    background-color: var(--thead_bg_color);
   }
   .experience tbody {
-    background-color: #3f4e6a;
+    background-color: var(--menu_bg_color);
   }
 }

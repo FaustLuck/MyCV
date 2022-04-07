@@ -18,8 +18,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/cube.ico">
   <link rel="stylesheet" href="./assets/styles/style.css">
-  <link rel="stylesheet" href="./assets/styles/light.css" media="(prefers-color-scheme: light)">
-  <link rel="stylesheet" href="./assets/styles/dark.css" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" title="theme" href="./assets/styles/light.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" title="theme" href="./assets/styles/dark.css" media="(prefers-color-scheme: dark)">
   <link rel="stylesheet" href="./assets/styles/cube.css">
 </head>
 
@@ -29,8 +29,8 @@
       <div class="theme__wrapper">
         <div class="theme">
           <picture>
-            <source srcset="./assets/icons/light.svg" media="(prefers-color-scheme: light)" />
-            <img class="contacts__item_logo" src="./assets/icons/dark.svg" alt="Перейти на темную тему">
+            <source srcset="./assets/icons/dark.svg light_theme" media="(prefers-color-scheme: light)" />
+            <img class="contacts__item_logo" src="./assets/icons/light.svg" alt="Перейти на темную тему">
           </picture>
         </div>
       </div>
@@ -52,7 +52,7 @@
           <li class="contacts__item">
             <a href="https://github.com/FaustLuck" target="_blank">
               <picture>
-                <source srcset="./assets/icons/github-light.svg" media="(prefers-color-scheme: light)" />
+                <source class="light_theme" srcset="./assets/icons/github-light.svg" media="(prefers-color-scheme: light)" />
                 <img class="contacts__item_logo" src="./assets/icons/github-dark.svg" alt="Ссылка на мой Github">
               </picture>Github
             </a>

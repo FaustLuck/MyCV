@@ -1,3 +1,15 @@
+function toggleTheme() {
+    let link = document.getElementsByTagName(link);
+    let light = a.filter(e => e.href.indexOf('light') > -1)[0]
+    let dark = a.filter(e => e.href.indexOf('dark') > -1)[0]
+
+
+
+
+    //window.matchMedia('(prefers-color-scheme: dark)')
+}
+
+
 document.addEventListener('click', function (e) {
     let menu = document.querySelector('.menu');
     if (e.target.closest('.menu:not(.open)')) {
