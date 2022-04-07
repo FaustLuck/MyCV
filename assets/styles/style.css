@@ -1,5 +1,4 @@
 /* COMMON */
-
 body {
     padding: 0;
     margin: 0;
@@ -9,9 +8,7 @@ body {
     background-size: cover;
     background-blend-mode: soft-light;
     background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
+    width: 100%;
 }
 
 section,
@@ -19,6 +16,7 @@ footer {
     width: 100%;
     max-width: 800px;
     align-self: center;
+    margin: 0 auto;
 }
 
 img {
@@ -99,7 +97,6 @@ a {
 
 .open {
     position: fixed;
-    right: 0;
     bottom: 0;
     top: 0;
     right: 0;
@@ -110,7 +107,7 @@ a {
 }
 
 .menu.open + .overley {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     opacity: 0.8;
 }
@@ -183,11 +180,18 @@ a {
 /* TITLE */
 
 .title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.avatar__wrapper div {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
 }
 
 .main__title {
@@ -196,13 +200,12 @@ a {
     font-size: 2.5rem;
     line-height: 3rem;
     letter-spacing: 0.2rem;
-    padding-bottom: 50%;
 }
 
 .avatar {
-    width: 50%;
+    margin-top: 1rem;
     border-radius: 50%;
-    align-self: center;
+    max-width: 30rem;
 }
 
 /* EXPERIENCE */
@@ -258,7 +261,7 @@ a {
     width: 90%;
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
     body {
         background: url(../image/backgrounds/Welcome-medium.jpg) no-repeat;
         background-size: cover;
@@ -266,10 +269,17 @@ a {
     }
 }
 
-@media (min-width: 1200px) {
+@media screen and(min-width: 1200px) {
     body {
         background: url(../image/backgrounds/Welcome-large.jpg) no-repeat;
         background-size: cover;
         background-attachment: fixed;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    .title {
+        height: 100%;
+        margin: 10rem auto;
     }
 }

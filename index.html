@@ -53,11 +53,16 @@
     <div class="overley"></div>
   </header>
   <section class="title" id="top">
-    <img class="avatar" src="./assets/image/avatar.jpg" alt="">
-    <h1 class="main__title">
-      Добро пожаловать!
-    </h1>
+    <div class="avatar__wrapper">
+      <div>
+        <img class="avatar" src="./assets/image/avatar.jpg" alt="">
+      </div>
 
+      <h1 class="main__title">
+        Добро пожаловать!
+      </h1>
+    </div>
+    <div></div>
   </section>
   <section id="about">
     <h2>Кратко обо мне</h2>
@@ -194,13 +199,15 @@
     </ul>
     <h3>Форма обратной связи</h3>
     <form action="" method="post">
-      <div class="field">
-        <label>Ваше имя:</label>
-        <input type="text" name="name" placeholder="Введите имя..." required>
-      </div>
-      <div class="field">
-        <label>Ваш Email:</label>
-        <input type="email" name="email" placeholder="Введите email..." required>
+      <div>
+        <div class="field">
+          <label>Ваше имя:</label>
+          <input type="text" name="name" placeholder="Введите имя..." required>
+        </div>
+        <div class="field">
+          <label>Ваш Email:</label>
+          <input type="email" name="email" placeholder="Введите email..." required>
+        </div>
       </div>
       <label>Ваше сообщение:</label>
       <div class="message">
