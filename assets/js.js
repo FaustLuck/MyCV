@@ -10,7 +10,7 @@ function toggleTheme(e) {
 
 function toggleMenu(e) {
   if (window.matchMedia('(min-width: 768px)').matches) return;
-  if (!e.target.closest('.menu')) return
+  if (!e.target.closest('header')) return
   let menu = document.querySelector('.menu');
   menu.classList.toggle('open');
   let flag = Array.from(menu.classList).includes('open');
