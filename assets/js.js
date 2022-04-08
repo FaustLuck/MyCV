@@ -5,6 +5,7 @@ function toggleTheme(e) {
   window.localStorage.setItem('dark', isDark)
   document.body.classList.toggle('dark')
   document.body.classList.toggle('light')
+  toggleIcon()
 }
 
 function toggleMenu(e) {
@@ -25,7 +26,23 @@ function checkTheme() {
     window.localStorage.setItem('dark', 'true')
     document.body.classList.add('dark')
   }
+  toggleIcon()
 }
+
+function toggleIcon() {
+  let icons = document.querySelectorAll('.icon');
+  icons = Array.from(icons);
+  icons = icons.map(toggleSrc)
+}
+
+function toggleSrc(el) {
+  let sep = (window.localStorage.getItem('dark') == 'true') ? 'dark' : 'light'
+  let tmp = el.src.split(sep)
+  tmp = tmp.join(sep)
+  el.src = tmp
+  return el
+}
+
 
 document.addEventListener('click', toggleMenu)
 document.addEventListener('click', toggleTheme)
