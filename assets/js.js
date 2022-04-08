@@ -33,14 +33,16 @@ function toggleIcon() {
   let icons = document.querySelectorAll('.icon');
   icons = Array.from(icons);
   icons = icons.map(toggleSrc)
+  //icons = icons.forEach(toggleIcon)
+
 }
 //TODO не меняет src
 function toggleSrc(el) {
-  let sep = (window.localStorage.getItem('dark') == 'true') ? 'dark' : 'light'
+  let sep = (window.localStorage.getItem('dark') == 'true') ? 'dark' : 'light';
+  let newSep = (window.localStorage.getItem('dark') == 'true') ? 'light' : 'dark';
   let tmp = el.src.split(sep)
-  tmp = tmp.join(sep)
+  tmp = tmp.join(newSep)
   el.src = tmp
-  return el
 }
 
 
