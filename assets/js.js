@@ -1,6 +1,8 @@
 function toggleTheme(e) {
   if (!e.target.closest('.theme')) return;
   let flag = window.localStorage.getItem('dark')
+  window.localStorage.setItem('dark', !flag)
+  console.log(window.localStorage.getItem('dark'))
   document.body.classList.toggle('dark')
   document.body.classList.toggle('light')
 }
@@ -23,4 +25,8 @@ if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 } else {
   window.localStorage.setItem('dark', false)
   document.body.classList.add('light')
+}
+
+function toggleIcons() {
+  document.querySelector
 }
