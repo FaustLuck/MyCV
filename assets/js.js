@@ -1,8 +1,8 @@
 function toggleTheme(e) {
   if (!e.target.closest('.theme')) return;
-  let flag = window.localStorage.getItem('dark')
-  window.localStorage.setItem('dark', !flag)
-  console.log(window.localStorage.getItem('dark'))
+  let isDark = window.localStorage.getItem('dark')
+  isDark = (isDark == 'true') ? false : true;
+  window.localStorage.setItem('dark', isDark)
   document.body.classList.toggle('dark')
   document.body.classList.toggle('light')
 }
@@ -16,17 +16,17 @@ function toggleMenu(e) {
   document.body.style.overflow = (flag) ? 'hidden' : 'auto'
 }
 
+function checkTheme() {
+  let isDark = window.localStorage.getItem('dark');
+  if (isDark == 'false' || isDark == null) {
+    window.localStorage.setItem('dark', 'false')
+    document.body.classList.add('light')
+  } else {
+    window.localStorage.setItem('dark', 'true')
+    document.body.classList.add('dark')
+  }
+}
+
 document.addEventListener('click', toggleMenu)
 document.addEventListener('click', toggleTheme)
-
-if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  window.localStorage.setItem('dark', true)
-  document.body.classList.add('dark')
-} else {
-  window.localStorage.setItem('dark', false)
-  document.body.classList.add('light')
-}
-
-function toggleIcons() {
-  document.querySelector
-}
+document.addEventListener('DOMContentLoaded', checkTheme)
