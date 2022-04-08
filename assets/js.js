@@ -1,26 +1,26 @@
-function toggleTheme() {
-    let link = document.getElementsByTagName('link');
-    let light = a.filter(e => e.href.indexOf('light') > -1)[0]
-    let dark = a.filter(e => e.href.indexOf('dark') > -1)[0]
-
-
-
-
-    //window.matchMedia('(prefers-color-scheme: dark)')
+function toggleTheme(e) {
+  if (!e.target.closest('.theme')) return;
+  let flag = window.localStorage.getItem('dark')
+  document.body.classList.toggle('dark')
+  document.body.classList.toggle('light')
 }
 
-function openMenu() {
-    document.addEventListener('click', function (e) {
-        if (window.matchMedia('(min-width: 768px)').matches) return;
-        let menu = document.querySelector('.menu');
-        if (e.target.closest('.menu:not(.open)')) {
-            menu.classList.add('open');
-            document.body.style.overflow = 'hidden';
-        } else if (e.target.closest('header')) {
-            menu.classList.remove('open');
-            document.body.style.overflow = 'auto';
-        }
-    })
+function toggleMenu(e) {
+  if (window.matchMedia('(min-width: 768px)').matches) return;
+  if (!e.target.closest('.menu')) return
+  let menu = document.querySelector('.menu');
+  menu.classList.toggle('open');
+  let flag = Array.from(menu.classList).includes('open');
+  document.body.style.overflow = (flag) ? 'hidden' : 'auto'
 }
 
-openMenu()
+document.addEventListener('click', toggleMenu)
+document.addEventListener('click', toggleTheme)
+
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  window.localStorage.setItem('dark', true)
+  document.body.classList.add('dark')
+} else {
+  window.localStorage.setItem('dark', false)
+  document.body.classList.add('light')
+}

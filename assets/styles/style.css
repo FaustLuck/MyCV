@@ -1,14 +1,4 @@
 /* COMMON */
-body.light {
-  --main_bg_color: #e9d0a1;
-  --text_color: #000;
-  --quote_bg_color: #e4b14ecc;
-  --menu_bg_color: #e4b14e;
-  --overley_color: #c4c4c4;
-  --menu_hover: #00f;
-  --thead_bg_color: #9d7220;
-}
-
 body.dark {
   --main_bg_color: #060502;
   --text_color: #fff;
@@ -17,6 +7,16 @@ body.dark {
   --overley_color: #212631;
   --menu_hover: #f00;
   --thead_bg_color: #191f29;
+}
+
+body.light {
+  --main_bg_color: #e9d0a1;
+  --text_color: #000;
+  --quote_bg_color: #e4b14ecc;
+  --menu_bg_color: #e4b14e;
+  --overley_color: #c4c4c4;
+  --menu_hover: #00f;
+  --thead_bg_color: #9d7220;
 }
 
 body {
@@ -248,7 +248,7 @@ a {
 }
 
 .experience td {
-  padding: .5rem;
+  padding: 0.5rem;
   text-align: center;
 }
 
@@ -431,5 +431,17 @@ a {
     --overley_color: #212631;
     --menu_hover: #f00;
     --thead_bg_color: #191f29;
+  }
+}
+
+@media (prefers-color-sheme: light) {
+  :root {
+    --main_bg_color: #e9d0a1;
+    --text_color: #000;
+    --quote_bg_color: #e4b14ecc;
+    --menu_bg_color: #e4b14e;
+    --overley_color: #c4c4c4;
+    --menu_hover: #00f;
+    --thead_bg_color: #9d7220;
   }
 }
