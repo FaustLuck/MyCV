@@ -34,7 +34,7 @@ function toggleIcon() {
   icons = Array.from(icons);
   icons = icons.map(toggleSrc)
 }
-
+//TODO не меняет src
 function toggleSrc(el) {
   let sep = (window.localStorage.getItem('dark') == 'true') ? 'dark' : 'light'
   let tmp = el.src.split(sep)
