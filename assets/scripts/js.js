@@ -55,8 +55,8 @@ function toggleOverley(form = '') {
   showHideOverflow(flag)
 }
 
-function openForm(e) {
-  if (!(e.target.closest('.writing') || e.target.closest('.close'))) return;
+function toggleForm(e) {
+  if (!(e.target.closest('.writing') || e.target.closest('.close') || e.target.closest('.submit'))) return;
   let writingIcon = document.querySelector('.writing')
   writingIcon.classList.toggle('hide')
   if (document.querySelector('.overley').classList.contains('open')) toggleOverley()
@@ -65,10 +65,8 @@ function openForm(e) {
   form.classList.toggle('open')
 }
 
-
-
-
 document.addEventListener('click', toggleMenu)
 document.addEventListener('click', toggleTheme)
 document.addEventListener('DOMContentLoaded', checkTheme)
-document.addEventListener('click', openForm)
+document.addEventListener('click', toggleForm)
+

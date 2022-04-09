@@ -84,17 +84,6 @@ textarea {
   width: 90%;
 }
 
-input[type="submit"] {
-  color: var(--text_color);
-  background-color: var(--main_bg_color);
-  display: flex;
-  align-self: center;
-  margin: 2rem auto;
-  padding: 0.5rem;
-  border-radius: 1rem;
-  border-style: none;
-}
-
 a {
   font-weight: 400;
 }
@@ -210,7 +199,7 @@ input::placeholder {
   display: block;
 }
 
-.lang{
+.lang {
   width: 5rem;
   margin: 1rem auto;
 }
@@ -356,11 +345,23 @@ form {
   height: 1.5rem;
 }
 
-.overley.open.form{
+.overley.open.form {
   z-index: 15;
 }
 
-.bucket{
+.submit {
+  color: var(--text_color);
+  background-color: var(--main_bg_color);
+  display: flex;
+  align-self: center;
+  margin: 2rem auto;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  border-style: none;
+  cursor: pointer;
+}
+
+.bucket {
   display: none;
 }
 
@@ -441,6 +442,10 @@ form {
 
   .main__title {
     font-weight: 900;
+  }
+
+  .lang {
+    margin: 0;
   }
 }
 

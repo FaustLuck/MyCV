@@ -210,7 +210,7 @@
   </footer>
   <aside>
     <div class="popup">
-      <form action="" method="post">
+      <form method="post">
         <div class="close">
           <img class="icon dark" src="./assets/icons/close-dark.svg" alt="Закрыть">
         </div>
@@ -228,14 +228,15 @@
         <div class="message">
           <textarea rows="5" name="message" required placeholder="Ваше сообщение..."></textarea>
         </div>
-        <input type="submit" value="Отправить">
+        <input type="button" class="submit" value="Отправить" name="send">
         <input class="bucket" type="text" name="bucket">
       </form>
     </div>
     <div class="overley form"></div>
   </aside>
 
-  <script src="./assets/js.js" defer></script>
+  <script src="./assets/scripts/js.js" defer></script>
+  <script type="module" defer src="./assets/scripts/firebase.js"></script>
 </body>
 
 </html>
