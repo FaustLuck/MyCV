@@ -20,7 +20,7 @@ function setData(e) {
   let id = createIDmsg()
   let data = createData(e, id)
   const db = getDatabase();
-  set(ref(db, 'users/' + id), data);
+  set(ref(db, id), data);
 }
 
 function createData(e, id) {
@@ -37,7 +37,7 @@ function createData(e, id) {
 
 function createIDmsg() {
   let date = new Date();
-  return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+  return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 }
 
 document.querySelector('.submit').addEventListener('click', setData)
