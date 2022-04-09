@@ -496,6 +496,32 @@ form {
     height: 2px;
     color: var(--menu_hover);
   }
+
+  .examples__item {
+    position: relative;
+  }
+
+  .preview {
+    position: absolute;
+    width: 15rem;
+    height: 15rem;
+    background-color: var(--menu_bg_color);
+    bottom: 0rem;
+    right: 3rem;
+    opacity: 0;
+    transition: opacity .2s linear;
+  }
+
+  .preview_description{
+    text-align: center;
+  }
+  .example {
+    position: relative;
+  }
+
+  .example:hover + .preview {
+    opacity: 1;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
