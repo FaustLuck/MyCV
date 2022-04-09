@@ -201,6 +201,15 @@ a {
   display: block;
 }
 
+.writing{
+  position: fixed;
+  width: 5rem;
+  height: 5rem;
+  right: 0;
+  bottom: 0;
+  margin:2rem;
+}
+
 /* TITLE */
 
 .title {
@@ -224,6 +233,7 @@ a {
   font-size: 2.5rem;
   line-height: 3rem;
   letter-spacing: 0.2rem;
+  word-break: break-word;
 }
 
 .avatar {
