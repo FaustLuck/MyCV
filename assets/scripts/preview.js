@@ -122,13 +122,16 @@ function saveData(array) {
  * @param {Object} data - данные
  */
 function addData(data) {
+  console.log(data)
   let target = data.target.closest('.examples__item');
+  let preview = target.querySelector('.empty')
   let title = target.querySelector('.preview_title');
   let description = target.querySelector('.preview_description');
   let img = target.querySelector('.preview_img');
   title.textContent = data.title;
   description.textContent = data.description;
   img.src = data.src;
+  preview.classList.remove('empty')
 }
 
 /**
