@@ -1,3 +1,6 @@
+/**
+ * Проверка сохранена ли предпочитаемая тема
+ */
 function checkTheme() {
   let isDark = window.localStorage.getItem('dark');
   if (isDark == 'false' || isDark == null) {
@@ -10,6 +13,10 @@ function checkTheme() {
   toggleIcon()
 }
 
+/**
+ * Переключение темы
+ * @param {Event} e - событие клика переключения темы
+ */
 function toggleTheme(e) {
   if (!e.target.closest('.theme')) return;
   let isDark = window.localStorage.getItem('dark')
@@ -20,12 +27,19 @@ function toggleTheme(e) {
   toggleIcon()
 }
 
+/**
+ * Переключение иконок в зависимости от темы
+ */
 function toggleIcon() {
   let icons = document.querySelectorAll('.icon');
   icons = Array.from(icons);
   icons = icons.map(toggleSrc)
 }
 
+/**
+ * Редактирование путей иконок в зависимости от темы
+ * @param {Object} el - иконка путь которой надо заменить
+ */
 function toggleSrc(el) {
   let sep = (window.localStorage.getItem('dark') == 'true') ? 'dark' : 'light';
   let newSep = (window.localStorage.getItem('dark') == 'true') ? 'light' : 'dark';
@@ -34,6 +48,10 @@ function toggleSrc(el) {
   el.src = tmp
 }
 
+/**
+ * Открытие/Закрытие меню
+ * @param {Event} e - событие клика на меню
+ */
 function toggleMenu(e) {
   if (window.matchMedia('(min-width: 768px)').matches) return;
   let menu = document.querySelector('.menu');
@@ -43,10 +61,18 @@ function toggleMenu(e) {
   toggleOverley()
 }
 
+/**
+ * Скрывает/Показывает полосы прокрутки
+ * @param {Boolean} flag - true если overley открыт
+ */
 function showHideOverflow(flag) {
   document.body.style.overflow = (flag) ? 'hidden' : 'auto'
 }
 
+/**
+ * показывает/скрывает overley
+ * @param {String} form - доп класс для overley формы
+ */
 function toggleOverley(form = '') {
   if (form) form = `.${form}`
   let overley = document.querySelector(`.overley${form}`);
@@ -55,6 +81,10 @@ function toggleOverley(form = '') {
   showHideOverflow(flag)
 }
 
+/**
+ * показывает/скрывает форму обратной связи и оверлей
+ * @param {Event} e - событие клика
+ */
 function toggleForm(e) {
   if (!(e.target.closest('.writing') || e.target.closest('.close') || e.target.closest('.submit'))) return;
   let writingIcon = document.querySelector('.writing')
