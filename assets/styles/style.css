@@ -23,7 +23,7 @@ body {
   padding: 0;
   margin: 0;
   font: 16px/20px "Roboto", sans-serif;
-  background-image: url(../../image/backgrounds/Welcome-small.jpg);
+  background-image: url(../image/backgrounds/Welcome-small.jpg);
   background-size: cover;
   background-blend-mode: soft-light;
   background-attachment: fixed;
@@ -213,6 +213,42 @@ input::placeholder {
   display: block;
 }
 
+.burger {
+  position: fixed;
+  width: 2rem;
+  height: 2rem;
+  right: 0;
+  top: 0;
+  z-index: 11;
+  margin: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.burger span::after,
+.burger span::before {
+  content: "";
+  position: absolute;
+}
+
+.burger span::after {
+  top: 0.5rem;
+}
+
+.burger span::before {
+  bottom: 0.5rem;
+}
+
+.burger span::after,
+.burger span::before,
+.burger span {
+  display: block;
+  width: 100%;
+  height: 0.125rem;
+  background-color: var(--text_color);
+}
+
 .theme__wrapper {
   position: relative;
   height: 4rem;
@@ -265,6 +301,7 @@ input::placeholder {
   z-index: 15;
 }
 
+.burger.hide,
 .writing.hide {
   display: none;
 }
@@ -449,7 +486,11 @@ form {
 
 @media screen and (min-width: 768px) {
   body {
-    background-image: url(../../image/backgrounds/Welcome-medium.jpg);
+    background-image: url(../image/backgrounds/Welcome-medium.jpg);
+  }
+
+  .burger{
+    display: none;
   }
 
   .menu {
@@ -546,7 +587,7 @@ form {
 
 @media screen and (min-width: 1200px) {
   body {
-    background-image: url(../../image/backgrounds/Welcome-large.jpg);
+    background-image: url(../image/backgrounds/Welcome-large.jpg);
   }
 
   p {
@@ -610,7 +651,7 @@ form {
     transition: opacity 0.2s linear;
   }
 
-  .preview.empty{
+  .preview.empty {
     display: none;
   }
 

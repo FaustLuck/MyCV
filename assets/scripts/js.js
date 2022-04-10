@@ -56,9 +56,19 @@ function toggleMenu(e) {
   if (window.matchMedia('(min-width: 768px)').matches) return;
   let menu = document.querySelector('.menu');
   if (e.target.closest('.writing')) menu.classList.remove('open')
-  if (!(e.target.closest('.menu') || e.target.closest('.overley:not(form'))) return
+  if (!(e.target.closest('.menu') || e.target.closest('.burger') || e.target.closest('.overley:not(form'))) return
   menu.classList.toggle('open');
   toggleOverley()
+  toggleBurger(menu)
+}
+
+/**
+ * Показывает/скрывает бургер
+ * @param {HTMLElement} menu - выпадающее меню
+ */
+function toggleBurger(menu) {
+  let burger = document.querySelector('.burger');
+  burger.classList.toggle('hide', menu.classList.contains('open'))
 }
 
 /**
