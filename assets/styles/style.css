@@ -23,8 +23,7 @@ body {
   padding: 0;
   margin: 0;
   font: 16px/20px "Roboto", sans-serif;
-  overflow-x: hidden;
-  background: url(../image/backgrounds/Welcome-small.jpg) no-repeat;
+  background-image: url(../image/backgrounds/Welcome-small.jpg);
   background-size: cover;
   background-blend-mode: soft-light;
   background-attachment: fixed;
@@ -367,11 +366,7 @@ form {
 
 @media screen and (min-width: 768px) {
   body {
-    background: url(../image/backgrounds/Welcome-medium.jpg) no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-color: var(--main_bg_color);
-    background-blend-mode: soft-light;
+    background-image: url(../image/backgrounds/Welcome-medium.jpg);
   }
 
   .menu {
@@ -451,11 +446,7 @@ form {
 
 @media screen and (min-width: 1200px) {
   body {
-    background: url(../image/backgrounds/Welcome-large.jpg) no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-color: var(--main_bg_color);
-    background-blend-mode: soft-light;
+    background-image: url(../image/backgrounds/Welcome-large.jpg);
   }
 
   p {
@@ -510,12 +501,12 @@ form {
     bottom: 0rem;
     right: 3rem;
     opacity: 0;
-    transition: opacity .2s linear;
+    transition: opacity 0.2s linear;
   }
 
-  .preview_description{
+  .preview_description {
     text-align: center;
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
   }
   .example {
     position: relative;
