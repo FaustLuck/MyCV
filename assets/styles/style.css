@@ -610,6 +610,10 @@ form {
     transition: opacity 0.2s linear;
   }
 
+  .preview.empty{
+    display: none;
+  }
+
   .preview_description {
     text-align: center;
     padding-bottom: 0.5rem;
