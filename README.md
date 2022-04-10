@@ -1,4 +1,4 @@
-<div style="text-align:center">
+<p align="center">
 <h1>Резюме</h1>
 
 <a href="https://faustluck.github.io/MyCV/index.html">результат</a> с адаптивной версткой.
@@ -7,4 +7,4 @@
 
 Файлы <a href="assets/styles">CSS</a> и <a href="assets/scripts">JS</a> минмифицированы для ускорения загрузки
 
-</div>
+</p>
