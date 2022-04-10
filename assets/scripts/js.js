@@ -74,7 +74,7 @@ function showHideOverflow(flag) {
  * @param {String} form - доп класс для overley формы
  */
 function toggleOverley(form = '') {
-  if (form) form = `.${form}`
+  if (form) form = `.${form}`;
   let overley = document.querySelector(`.overley${form}`);
   overley.classList.toggle('open')
   let flag = overley.classList.contains('open')
@@ -99,4 +99,3 @@ document.addEventListener('click', toggleMenu)
 document.addEventListener('click', toggleTheme)
 document.addEventListener('DOMContentLoaded', checkTheme)
 document.addEventListener('click', toggleForm)
-

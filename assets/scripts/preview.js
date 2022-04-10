@@ -10,7 +10,7 @@ async function fetchData(el) {
   if (response.ok) {
     text = await response.text();
   } else {
-    console.log(`Не удалось получить данные с ${href}`)
+    console.log(`Не удалось получить данные с ${href}`);
   }
   return text
 }
