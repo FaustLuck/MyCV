@@ -23,7 +23,7 @@ body {
   padding: 0;
   margin: 0;
   font: 16px/20px "Roboto", sans-serif;
-  background-image: url(../image/backgrounds/Welcome-small.jpg);
+  background-image: url(../../image/backgrounds/Welcome-small.jpg);
   background-size: cover;
   background-blend-mode: soft-light;
   background-attachment: fixed;
@@ -449,7 +449,7 @@ form {
 
 @media screen and (min-width: 768px) {
   body {
-    background-image: url(../image/backgrounds/Welcome-medium.jpg);
+    background-image: url(../../image/backgrounds/Welcome-medium.jpg);
   }
 
   .menu {
@@ -546,7 +546,7 @@ form {
 
 @media screen and (min-width: 1200px) {
   body {
-    background-image: url(../image/backgrounds/Welcome-large.jpg);
+    background-image: url(../../image/backgrounds/Welcome-large.jpg);
   }
 
   p {
