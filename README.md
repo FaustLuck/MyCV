@@ -1,6 +1,6 @@
-<p align="center">
+
 <h1>Резюме</h1>
-</p>
+
 <p align="center">
 <a href="https://faustluck.github.io/MyCV/index.html">результат</a> с адаптивной версткой.
 </p>
