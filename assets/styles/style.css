@@ -55,7 +55,7 @@ img {
 }
 
 a {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -122,6 +122,22 @@ input::-ms-input-placeholder {
   font-style: italic;
 }
 
+textarea::-webkit-input-placeholder, input::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+textarea::-moz-placeholder, input::-moz-placeholder {
+  font-style: italic;
+}
+
+textarea:-ms-input-placeholder, input:-ms-input-placeholder {
+  font-style: italic;
+}
+
+textarea::-ms-input-placeholder, input::-ms-input-placeholder {
+  font-style: italic;
+}
+
 textarea::placeholder,
 input::placeholder {
   font-style: italic;
@@ -144,6 +160,10 @@ input::placeholder {
   background-color: var(--menu_bg_color);
   -webkit-box-shadow: 0.25rem 0 1.25rem 1rem var(--menu_bg_color);
   box-shadow: 0.25rem 0 1.25rem 1rem var(--menu_bg_color);
+}
+
+.menu.open h2 {
+  margin: 0;
 }
 
 .overley {
@@ -180,7 +200,7 @@ input::placeholder {
 
 .menu__inner {
   font-weight: 700;
-  line-height: 3rem;
+  line-height: 1.5rem;
   text-align: center;
   display: none;
   position: relative;
@@ -221,8 +241,12 @@ input::placeholder {
   top: 0;
   z-index: 11;
   margin: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   cursor: pointer;
 }
 
@@ -489,7 +513,7 @@ form {
     background-image: url(../image/backgrounds/Welcome-medium.jpg);
   }
 
-  .burger{
+  .burger {
     display: none;
   }
 
