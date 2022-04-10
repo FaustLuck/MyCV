@@ -1,5 +1,10 @@
-async function showPreview(e) {
-  let href = e.target.href
+/**
+ * Отправляет запрос на адрес в el.href
+ * @param {HTMLElement} el - элемент для которого необходим предпросмотр
+ * @returns {String} HTML единой строкой
+ */
+async function fetchData(el) {
+  let href = el.href
   let response = await fetch(href);
   let text;
   if (response.ok) {
@@ -7,42 +12,62 @@ async function showPreview(e) {
   } else {
     console.log(`Не удалось получить данные с ${href}`)
   }
-  let array = text.split('\n')
-  array = array.filter(e => e.indexOf('og:') > -1)
-  array = array
-    .map(e => {
-      e = e.replaceAll('\"', '')
-      return {
-        property: getProperty(e),
-        value: getContent(e)
-      }
-    })
-  array = prepareData(array)
-  addData(array, e.target)
-
+  return text
 }
 
+/**
+ * Делит строку с HTML
+ * @param {String} el - HTML единой строкой
+ * @returns {[String]} HTML разделенный на строки
+ */
+function splitData(el) {
+  return el.split('\n')
+}
+
+/**
+ * Извекает данные OG
+ * @param {String} el - HTML строка
+ * @returns {Object} - данные из HTML в удобном формате (свойство : значение)
+ */
+function createInfo(el) {
+  return {
+    property: getProperty(el),
+    value: getContent(el)
+  }
+}
+
+/**
+ * фильтрует данные с OG
+ * @param {[String]} el - массив HTML строк
+ * @returns {Object} данные для подстановки в карточку .preview
+ */
+function createOG_object(el) {
+  return el
+    .filter(e => e.indexOf('og:') > -1) //оставляем строки, содержащие OG
+    .map(e => e.replaceAll('\"', '')) //Убираем экранированные ковычки
+    .map(createInfo)
+}
+
+/**
+ * Подготавливает даннеы для записи в HTML теги
+ * @param {Object} data - данные
+ * @returns {Object} подготовленные данные
+ */
 function prepareData(data) {
   let output = {};
   output.title = data.find(e => e.property == 'title').value;
   output.description = data.find(e => e.property == 'description').value;
   let url = data.find(e => e.property == 'url').value.replace('index.html', '');
-  let img = data.find(e => e.property == 'image').value.replace('./', '');
-  output.img = url + img;
+  let src = data.find(e => e.property == 'image').value.replace('./', '');
+  output.src = url + src;
   return output;
 }
 
-//TODO картинка выезжает за карточку
-function addData(data, target) {
- target= target.closest('.examples__item');
-  let title = target.querySelector('.preview_title');
-  let description = target.querySelector('.preview_description');
-  let img = target.querySelector('.preview_img');
-  title.innerHTML = data.title;
-  description.innerHTML = data.description;
-  img.src = data.img;
-}
-
+/**
+ * Возвращает название OG свойства
+ * @param {String} str - HTML строка
+ * @returns {String} - OG свойство
+ */
 function getProperty(str) {
   let search = 'og:';
   let start = str.indexOf(search);
@@ -50,6 +75,11 @@ function getProperty(str) {
   return str.substring(start + search.length, end);
 }
 
+/**
+ * Возвращает OG значение
+ * @param {String} str - HTML строка
+ * @returns {String} - OG значение
+ */
 function getContent(str) {
   let search = 'content=';
   let start = str.indexOf(search);
@@ -57,19 +87,72 @@ function getContent(str) {
   return str.substring(start + search.length, end)
 }
 
-let examples = document.querySelectorAll('.example')
 
-examples.forEach(el => {
-  el.addEventListener('pointerover', showPreview)
-})
+async function checkMedia() {
+  if (!window.matchMedia('(any-hover: hover)').matches) return;
+  let examples = document.querySelectorAll('.example')
+  examples = Array.from(examples)
+  let readyToAdd = examples.map(checkStorage).filter(e => e?.img != '') // Данные готовые для заполнение
+  let mustFetch = examples.map(checkStorage).filter(e => e?.img) // Данные которым небходим запрос
+  if (mustFetch.length) {
+    mustFetch = await Promise.all([...mustFetch].map(fetchData))
+    mustFetch = mustFetch.map(splitData).map(createOG_object).map(prepareData)
+    saveData(mustFetch)
+    mustFetch.map(el => {
+      el.target = examples.find(e => e.text == el.title)
+    })
+  }
+  readyToAdd = [...readyToAdd, ...mustFetch]
+  readyToAdd.forEach(addData)
+}
 
-/*
-0: {property: 'title', value: 'MoGo'}
-1: {property: 'site_name', value: 'MoGo'}
-2: {property: 'url', value: 'https://faustluck.github.io/MoGo/'}
-3: {property: 'description', value: 'MoGo пример верстки'}
-4: {property: 'image', value: './assets/images/Preview.png'}
-5: {property: 'image:type', value: 'image/png'}
-6: {property: 'image:width', value: '200'}
-7: {property: 'image:height', value: '200'}
-*/
+/**
+ * Сохранение данных в LocalStorage
+ * @param {[String]} array - данные для сохранения
+ */
+function saveData(array) {
+  array = array.map(el => {
+    window.localStorage.setItem(el.title, el.description)
+    window.localStorage.setItem(`${el.title}-src`, el.src)
+  });
+}
+
+/**
+ * Запись данных в карточку .preview
+ * @param {Object} data - данные
+ */
+function addData(data) {
+  let target = data.target.closest('.examples__item');
+  let title = target.querySelector('.preview_title');
+  let description = target.querySelector('.preview_description');
+  let img = target.querySelector('.preview_img');
+  title.textContent = data.title;
+  description.textContent = data.description;
+  img.src = data.src;
+}
+
+/**
+ * Проверка хранилища на запрашиваемые данные
+ * @param {HTMLElement} target - элемент .preview, которому необходимо заполнить данные
+ * @returns {HTMLElement | Object} если checkValue=true => вернет исходный элемент,
+ *  в противном случае объект для заполнения
+ */
+function checkStorage(target) {
+  let output = {}
+  output.target = target;
+  output.title = target.textContent;
+  output.description = window.localStorage.getItem(target.textContent);
+  output.src = window.localStorage.getItem(`${target.textContent}-src`)
+  return (checkValue(output)) ? target : output
+}
+
+/**
+ * Проверяет value на заполненность
+ * @param {*} value 
+ * @returns {Boolean} - true если value неопределено
+ */
+function checkValue(value) {
+  return ((Object.values(value)).some(e => e == null || undefined))
+}
+
+document.addEventListener('DOMContentLoaded', checkMedia)
