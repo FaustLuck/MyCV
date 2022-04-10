@@ -102,6 +102,8 @@ async function checkMedia() {
       el.target = examples.find(e => e.text == el.title)
     })
   }
+  console.log(mustFetch)
+  console.log(readyToAdd)
   readyToAdd = [...readyToAdd, ...mustFetch]
   readyToAdd.forEach(addData)
 }
@@ -122,7 +124,6 @@ function saveData(array) {
  * @param {Object} data - данные
  */
 function addData(data) {
-  console.log(data)
   let target = (data.target).closest('.examples__item');
   let preview = target.querySelector('.empty')
   let title = target.querySelector('.preview_title');
