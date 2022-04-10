@@ -2,6 +2,6 @@
 
 [Результат](https://faustluck.github.io/MyCV/index.html) с адаптивной версткой.
 
-![Alt-текст](assets/image/preview.png)
+<img src="drawing.jpg" alt="drawing" style="width:200px;"/>
 
 Файлы [CCS](assets/styles) и [JS](assets/scripts) минмифицированы для ускорения загрузки
