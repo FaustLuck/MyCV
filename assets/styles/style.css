@@ -113,7 +113,6 @@ input::placeholder {
   z-index: 5;
   opacity: 0;
   width: 0;
-  height: 100%;
   transition: opacity 0.2s linear;
   background-color: var(--overley_color);
 }
