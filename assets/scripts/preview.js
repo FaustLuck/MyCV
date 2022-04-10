@@ -92,8 +92,12 @@ async function checkMedia() {
   if (!window.matchMedia('(any-hover: hover)').matches) return;
   let examples = document.querySelectorAll('.example')
   examples = Array.from(examples)
-  let readyToAdd = examples.map(checkStorage).filter(e => e?.img != '') // Данные готовые для заполнение
-  let mustFetch = examples.map(checkStorage).filter(e => e?.img) // Данные которым небходим запрос
+  let tmp = examples.map(checkStorage)
+  let readyToAdd = [];
+  let mustFetch = [];
+  tmp.forEach(e => {
+    (e.hasOwnProperty('src')) ? readyToAdd.push(e) : mustFetch.push(e)
+  })
   if (mustFetch.length) {
     mustFetch = await Promise.all([...mustFetch].map(fetchData))
     mustFetch = mustFetch.map(splitData).map(createOG_object).map(prepareData)
@@ -102,8 +106,6 @@ async function checkMedia() {
       el.target = examples.find(e => e.text == el.title)
     })
   }
-  console.log(mustFetch)
-  console.log(readyToAdd)
   readyToAdd = [...readyToAdd, ...mustFetch]
   readyToAdd.forEach(addData)
 }
@@ -124,7 +126,7 @@ function saveData(array) {
  * @param {Object} data - данные
  */
 function addData(data) {
-  let target = (data.target).closest('.examples__item');
+  let target = data.target.closest('.examples__item');
   let preview = target.querySelector('.empty')
   let title = target.querySelector('.preview_title');
   let description = target.querySelector('.preview_description');
