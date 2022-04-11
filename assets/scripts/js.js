@@ -58,6 +58,7 @@ function toggleMenu(e) {
   if (e.target.closest('.writing')) menu.classList.remove('open')
   if (!(e.target.closest('.menu') || e.target.closest('.burger') || e.target.closest('.overley:not(form'))) return
   menu.classList.toggle('open');
+  document.querySelector('.writing').classList.toggle('left')
   toggleOverley()
   toggleBurger(menu)
 }
@@ -98,6 +99,7 @@ function toggleOverley(form = '') {
 function toggleForm(e) {
   if (!(e.target.closest('.writing') || e.target.closest('.close') || e.target.closest('.submit'))) return;
   let writingIcon = document.querySelector('.writing')
+  if (writingIcon.classList.contains('left')) writingIcon.classList.remove('left')
   writingIcon.classList.toggle('hide')
   if (document.querySelector('.overley').classList.contains('open')) toggleOverley()
   toggleOverley('form');
