@@ -48,15 +48,13 @@
           </li>
           <li class="contacts__item">
             <a href="https://github.com/FaustLuck" target="_blank">
-              <img class="contacts__item_logo icon dark" src="./assets/icons/github-dark.svg"
-                alt="Ссылка на мой Github">
+      <img class="contacts__item_logo icon dark" src="./assets/icons/github-dark.svg" alt="Ссылка на мой Github">
               Github
             </a>
           </li>
         </ul>
         <hr>
       </div>
-
       <div class="lang menu__inner">
         <a href="./en.html"><img src="./assets/icons/en.svg" alt="русский"></a>
       </div>
@@ -71,7 +69,6 @@
       <div>
         <img class="avatar" src="./assets/image/avatar.jpg" alt="Аватар">
       </div>
-
       <h1 class="main__title">
         Добро пожаловать!
       </h1>
@@ -222,34 +219,42 @@
   </footer>
   <aside>
     <div class="popup">
-      <form method="post">
-        <div class="close">
-          <img class="icon dark" src="./assets/icons/close-dark.svg" alt="Закрыть">
-        </div>
-        <div>
-          <div class="field">
-            <label>Ваше имя:</label>
-            <input type="text" name="name" placeholder="Введите имя..." required>
+      <form>
+        <div class="container">
+          <div class="close">
+            <img class="icon dark" src="./assets/icons/close-dark.svg" alt="Закрыть">
           </div>
-          <div class="field">
-            <label>Ваш Email:</label>
-            <input type="email" name="email" placeholder="Введите email..." required>
+          <div>
+            <div class="field">
+              <label>Ваше имя:</label>
+              <input class="invalid" type="text" name="name" placeholder="Введите имя..." required>
+            </div>
+            <div class="field">
+              <label>Ваш Email:</label>
+              <input class="invalid" type="email" name="email" placeholder="Введите email..." required>
+            </div>
           </div>
+          <label>Ваше сообщение:</label>
+          <div class="message">
+            <textarea class="invalid" rows="5" name="message" required placeholder="Ваше сообщение..."></textarea>
+          </div>
+          <input type="button" class="submit inactive" value="Отправить" name="send">
+          <input class="bucket" type="text" name="bucket">
         </div>
-        <label>Ваше сообщение:</label>
-        <div class="message">
-          <textarea rows="5" name="message" required placeholder="Ваше сообщение..."></textarea>
+        <div class="preloader">
+          <div class="outer circle">
+            <div class="spinner"></div>
+          </div>
+          <div class="inner circle"></div>
         </div>
-        <input type="button" class="submit" value="Отправить" name="send">
-        <input class="bucket" type="text" name="bucket">
+        <div class="result"></div>
       </form>
     </div>
     <div class="overley form"></div>
   </aside>
-
-  <script src="./assets/scripts/js_min.js" defer></script>
-  <script type="module" src="./assets/scripts/firebase_min.js" defer></script>
+  <script type="module" src="./assets/scripts/js_min.js" defer></script>
   <script src="./assets/scripts/preview_min.js" defer></script>
+
 </body>
 
 </html>
