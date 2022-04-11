@@ -122,6 +122,26 @@ input::-ms-input-placeholder {
   font-style: italic;
 }
 
+textarea::-webkit-input-placeholder,
+input::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+textarea::-moz-placeholder,
+input::-moz-placeholder {
+  font-style: italic;
+}
+
+textarea:-ms-input-placeholder,
+input:-ms-input-placeholder {
+  font-style: italic;
+}
+
+textarea::-ms-input-placeholder,
+input::-ms-input-placeholder {
+  font-style: italic;
+}
+
 textarea::-webkit-input-placeholder, input::-webkit-input-placeholder {
   font-style: italic;
 }
@@ -245,8 +265,8 @@ input::placeholder {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   cursor: pointer;
 }
 
@@ -323,6 +343,11 @@ input::placeholder {
   bottom: 0;
   margin: 2rem;
   z-index: 15;
+}
+
+.writing.left {
+  right: auto;
+  left: 0;
 }
 
 .burger.hide,
@@ -414,6 +439,10 @@ input::placeholder {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+}
+
+.preview{
+  display: none;
 }
 
 /* CONTACTS */
@@ -628,6 +657,11 @@ form {
     height: 100%;
     margin: 10rem auto;
   }
+  .menu__inner h2,
+  .menu__inner hr:nth-child(1),
+  .menu__inner ul {
+    display: none;
+  }
 }
 
 @media (any-hover: hover) {
@@ -663,6 +697,7 @@ form {
 
   .preview {
     position: absolute;
+    display: block;
     width: 15rem;
     padding: 0.5rem;
     border-radius: 1rem;
