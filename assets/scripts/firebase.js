@@ -14,7 +14,16 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app)
-
+const errors = {
+  empty: {
+    ru: 'Заполнены не все поля!',
+    en: 'Not all fields are filled!'
+  },
+  email: {
+    ru: 'Не валидный адрес электронной почты',
+    en: 'Not a valid email address!'
+  }
+}
 /**
  * Отправка данных в firebase-database
  * @param {Object} e - событие отправки формы
@@ -24,6 +33,7 @@ const database = getDatabase(app)
 function setData(e) {
   let id = createIDmsg()
   let data = createData(e)
+  if (typeof (data) == 'string') return alert(data)
   const db = getDatabase();
   set(ref(db, id), data);
 }
@@ -35,13 +45,26 @@ function setData(e) {
  */
 function createData(e) {
   let form = document.forms[0]
+  let lang = document.documentElement.lang;
   if (form.bucket.value) return
   if (e.target != form.send) return
+  if ([form.name.value, form.email.value, form.message.value].some(e => e == '')) return errors.empty[lang];
+  if (!validateEmail(form.email.value)) return errors.email[lang]
   return {
     name: form.name.value,
     email: form.email.value,
     message: form.message.value
   }
+}
+document.documentElement.lang
+/**
+ * Проверка адреса эл. почты
+ * @param {String} email - адрес электронной почты
+ * @returns {Boolean} true если проверка пройдена
+ */
+function validateEmail(email) {
+  let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  return email.match(regex)
 }
 
 /**
