@@ -39,6 +39,10 @@ body {
   color: var(--text_color);
 }
 
+body.fixed {
+  overflow: hidden;
+}
+
 section,
 footer {
   width: 100%;
@@ -80,7 +84,9 @@ form {
   background-color: var(--menu_bg_color);
   padding: 3rem;
   border-radius: 1rem;
-  padding-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 figcaption {
@@ -96,6 +102,11 @@ figcaption {
 
 textarea {
   width: 90%;
+}
+
+input.invalid,
+textarea.invalid {
+  background: pink !important;
 }
 
 a {
@@ -142,19 +153,23 @@ input::-ms-input-placeholder {
   font-style: italic;
 }
 
-textarea::-webkit-input-placeholder, input::-webkit-input-placeholder {
+textarea::-webkit-input-placeholder,
+input::-webkit-input-placeholder {
   font-style: italic;
 }
 
-textarea::-moz-placeholder, input::-moz-placeholder {
+textarea::-moz-placeholder,
+input::-moz-placeholder {
   font-style: italic;
 }
 
-textarea:-ms-input-placeholder, input:-ms-input-placeholder {
+textarea:-ms-input-placeholder,
+input:-ms-input-placeholder {
   font-style: italic;
 }
 
-textarea::-ms-input-placeholder, input::-ms-input-placeholder {
+textarea::-ms-input-placeholder,
+input::-ms-input-placeholder {
   font-style: italic;
 }
 
@@ -441,7 +456,7 @@ input::placeholder {
   justify-content: space-between;
 }
 
-.preview{
+.preview {
   display: none;
 }
 
@@ -533,8 +548,69 @@ form {
   cursor: pointer;
 }
 
+.submit.inactive {
+  background-color: var(--menu_bg_color);
+  color: var(--menu_bg_color);
+  cursor: default;
+}
+
 .bucket {
   display: none;
+}
+
+.preloader {
+  width: 10rem;
+  height: 10rem;
+  background: radial-gradient(var(--menu_bg_color) 1.5rem, transparent 4rem);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  animation: loading 1.5s linear infinite;
+}
+.result.show,
+.preloader.show {
+  display: flex;
+}
+
+.result {
+  color: var(--text_color);
+}
+
+.result.error {
+  color: var(--menu_hover);
+}
+
+.outer.circle {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: conic-gradient(var(--text_color) 0 5%, transparent 75%);
+  border-width: 0;
+}
+.inner.circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--menu_bg_color);
+  border-width: 0;
+}
+
+.spinner {
+  width: 0.25rem;
+  height: 0.25rem;
+  background-color: var(--text_color);
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
 
 @media screen and (min-width: 768px) {
