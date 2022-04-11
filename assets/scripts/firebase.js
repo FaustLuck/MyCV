@@ -49,7 +49,7 @@ function createData(e) {
   if (form.bucket.value) return
   if (e.target != form.send) return
   if ([form.name.value, form.email.value, form.message.value].some(e => e == '')) return errors.empty[lang];
-  if (!validateEmail(form.email.value)) return errors.email[lang]
+  //if (!validateEmail(form.email.value)) return errors.email[lang]
   return {
     name: form.name.value,
     email: form.email.value,
