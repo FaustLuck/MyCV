@@ -6,7 +6,6 @@ function toggleMenu(e, flag = true) {
   if (flag) {
     if (window.matchMedia('(min-width: 768px)').matches) return;
     if (!(e.target.closest('.menu') || e.target.closest('.burger') || e.target.closest('.overley:not(form'))) return;
-    console.log(e)
   }
   let menu = document.querySelector('.menu');
   menu.classList.toggle('open');
@@ -107,7 +106,7 @@ function toggleWritingIcon(flag) {
 
 /**
  * 
- * @param {*} e 
+ * @param {Event} e - событие открытия/закрытия формы
  * @returns 
  */
 function toggleForm(e) {
@@ -149,7 +148,7 @@ function validateEmail(e) {
 
 /**
  * Проверяет значение на заполненность
- * @param {Event} e 
+ * @param {Event} e - событие набора текста
  */
 function isEmpty(e) {
   let value = e.target.value;
@@ -180,6 +179,7 @@ function addListeners() {
   inputs.forEach(el => {
     if (el.type == 'email') return el.addEventListener('input', validateEmail)
     if (el.classList.contains('bucket')) return;
+    if (el.type == 'radio') return;
     el.addEventListener('input', isEmpty)
   })
 }
@@ -195,13 +195,14 @@ function removeListeners() {
   inputs.forEach(el => {
     if (el.type == 'email') return el.removeEventListener('input', validateEmail)
     if (el.classList.contains('bucket')) return;
+    if (el.type == 'radio') return;
     el.removeEventListener('input', isEmpty)
   })
 }
 
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js'
-import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js'
+import { getDatabase, ref, set, get, update } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCukmuh4VplvLpM3XQzlkGCuyGgX7x2y18",
@@ -226,16 +227,12 @@ const errors = {
 
 /**
  * Отправка данных в firebase-database
- * @param {Object} e - событие отправки формы
- * @param {Number} e.id - ID сообщения (строка с датой отправки)
- * @param {Object} e.data - данные сообщения
  */
 function setData() {
   let lang = document.documentElement.lang;
   showPreloader();
   let id = createIDmsg();
   let data = createData();
-  if (typeof (data) == 'string') return alert(data)
   const db = getDatabase();
   set(ref(db, 'messages/' + id), data)
     .then(() => {
@@ -298,10 +295,7 @@ function showResult(result, error = false) {
   let output = document.querySelector('.result');
   preloader.classList.remove('show');
   output.classList.add('show');
-  if (error) {
-    output.classList.add('error');
-    console.log(error)
-  }
+  if (error) output.classList.add('error');
   output.textContent = result
 }
 
@@ -318,9 +312,248 @@ function showPreloader() {
   preloader.classList.add('show')
 }
 
-document.addEventListener('click', toggleMenu)
+/**
+ * Считывает инфо из БД о рейтинге
+ */
+function checkRating() {
+  const db = getDatabase();
+  get(ref(db, 'rating/'))
+    .then(snapshot => {
+      let rating = snapshot.val();
+      window.localStorage.setItem('count', rating.count)
+      window.localStorage.setItem('grade', rating.grade)
+      showRating(rating)
+    }).catch(error => {
+      console.log(error)
+    })
+}
+
+/**
+ * Отпровляет в БД новые данные по рейтингу
+ * @param {Event} e - выбор оценки пользователя
+ */
+function updateRating(e) {
+  let value = +e.target.value;
+  let count = +window.localStorage.getItem('count');
+  let grade = +window.localStorage.getItem('grade')
+  grade = (grade * count + value) / (count + 1);
+  grade = +grade.toFixed(2)
+  count++;
+  let rating = {
+    count,
+    grade
+  }
+  const db = getDatabase();
+  set(ref(db, 'rating/'), rating)
+  window.localStorage.setItem('voted', true)
+  toggleRatingStyles()
+}
+
+/**
+ * Подставляет значения в строку
+ * @param {Object} param - принимает объект
+ * @param {Number} param.count - количество голосов
+ * @param {Number} param.grade - средняя оценка
+ */
+function showRating({ count, grade }) {
+  let elem = document.querySelector('.star_rating_result');
+  elem.querySelector('.grade').textContent = grade;
+  elem.querySelector('.count').textContent = count;
+  if (window.localStorage.getItem('voted') == 'true') {
+    document.querySelector('.star_rating').classList.add('hide')
+    elem.classList.remove('hide')
+  }
+}
+
+/**
+ * После голосования последовательно
+ * 1) убирает блок со звездами, вместо него говорит "Спасибо"
+ * 2) убирает благодарности и покахываем статистику голосования
+ */
+function toggleRatingStyles() {
+  let thanks = document.querySelector('.thanks');
+  let stars = document.querySelector('.star_rating')
+  let ratingResult = document.querySelector('.star_rating_result')
+  stars.classList.add('hide')
+  thanks.classList.remove('hide')
+  setTimeout(() => {
+    thanks.classList.add('hide')
+    ratingResult.classList.remove('hide')
+  }, 2000)
+}
+
+/**
+ * Отправляет запрос на адрес в el.href
+ * @param {HTMLElement} el - элемент для которого необходим предпросмотр
+ * @returns {String} HTML единой строкой
+ */
+ async function fetchData(el) {
+  let href = el.href
+  let response = await fetch(href);
+  let text;
+  if (response.ok) {
+    text = await response.text();
+  } else {
+    console.log(`Не удалось получить данные с ${href}`);
+  }
+  return text
+}
+
+/**
+ * Делит строку с HTML
+ * @param {String} el - HTML единой строкой
+ * @returns {[String]} HTML разделенный на строки
+ */
+function splitData(el) {
+  return el.split('\n')
+}
+
+/**
+ * Извекает данные OG
+ * @param {String} el - HTML строка
+ * @returns {Object} - данные из HTML в удобном формате (свойство : значение)
+ */
+function createInfo(el) {
+  return {
+    property: getProperty(el),
+    value: getContent(el)
+  }
+}
+
+/**
+ * фильтрует данные с OG
+ * @param {[String]} el - массив HTML строк
+ * @returns {Object} данные для подстановки в карточку .preview
+ */
+function createOG_object(el) {
+  return el
+    .filter(e => e.indexOf('og:') > -1) //оставляем строки, содержащие OG
+    .map(e => e.replaceAll('\"', '')) //Убираем экранированные ковычки
+    .map(createInfo)
+}
+
+/**
+ * Подготавливает даннеы для записи в HTML теги
+ * @param {Object} data - данные
+ * @returns {Object} подготовленные данные
+ */
+function prepareData(data) {
+  let output = {};
+  output.title = data.find(e => e.property == 'title').value;
+  output.description = data.find(e => e.property == 'description').value;
+  let url = data.find(e => e.property == 'url').value.replace('index.html', '');
+  let src = data.find(e => e.property == 'image').value.replace('./', '');
+  output.src = url + src;
+  return output;
+}
+
+/**
+ * Возвращает название OG свойства
+ * @param {String} str - HTML строка
+ * @returns {String} - OG свойство
+ */
+function getProperty(str) {
+  let search = 'og:';
+  let start = str.indexOf(search);
+  let end = str.indexOf(' ', start);
+  return str.substring(start + search.length, end);
+}
+
+/**
+ * Возвращает OG значение
+ * @param {String} str - HTML строка
+ * @returns {String} - OG значение
+ */
+function getContent(str) {
+  let search = 'content=';
+  let start = str.indexOf(search);
+  let end = str.indexOf('>', start);
+  return str.substring(start + search.length, end)
+}
+
+/**
+ * если устройство пользователя может выполнить hover, показать примеры сайтов
+ */
+async function checkMedia() {
+  if (!window.matchMedia('(any-hover: hover)').matches) return;
+  let examples = document.querySelectorAll('.example')
+  examples = Array.from(examples)
+  let tmp = examples.map(checkStorage)
+  let readyToAdd = [];
+  let mustFetch = [];
+  tmp.forEach(e => {
+    (e.hasOwnProperty('src')) ? readyToAdd.push(e) : mustFetch.push(e)
+  })
+  if (mustFetch.length) {
+    mustFetch = await Promise.all([...mustFetch].map(fetchData))
+    mustFetch = mustFetch.map(splitData).map(createOG_object).map(prepareData)
+    saveData(mustFetch)
+    mustFetch.map(el => {
+      el.target = examples.find(e => e.text == el.title)
+    })
+  }
+  readyToAdd = [...readyToAdd, ...mustFetch]
+  readyToAdd.forEach(addData)
+}
+
+/**
+ * Сохранение данных в LocalStorage
+ * @param {[String]} array - данные для сохранения
+ */
+function saveData(array) {
+  array = array.map(el => {
+    window.localStorage.setItem(el.title, el.description)
+    window.localStorage.setItem(`${el.title}-src`, el.src)
+  });
+}
+
+/**
+ * Запись данных в карточку .preview
+ * @param {Object} data - данные
+ */
+function addData(data) {
+  let target = data.target.closest('.examples__item');
+  let preview = target.querySelector('.empty')
+  let title = target.querySelector('.preview_title');
+  let description = target.querySelector('.preview_description');
+  let img = target.querySelector('.preview_img');
+  title.textContent = data.title;
+  description.textContent = data.description;
+  img.src = data.src;
+  preview.classList.remove('empty')
+}
+
+/**
+ * Проверка хранилища на запрашиваемые данные
+ * @param {HTMLElement} target - элемент .preview, которому необходимо заполнить данные
+ * @returns {HTMLElement | Object} если checkValue=true => вернет исходный элемент,
+ *  в противном случае объект для заполнения
+ */
+function checkStorage(target) {
+  let output = {}
+  output.target = target;
+  output.title = target.textContent;
+  output.description = window.localStorage.getItem(target.textContent);
+  output.src = window.localStorage.getItem(`${target.textContent}-src`)
+  return (checkValue(output)) ? target : output
+}
+
+/**
+ * Проверяет value на заполненность
+ * @param {*} value 
+ * @returns {Boolean} - true если value неопределено
+ */
+function checkValue(value) {
+  return ((Object.values(value)).some(e => e == null || undefined))
+}
+
+document.addEventListener('DOMContentLoaded', checkMedia)
 document.addEventListener('DOMContentLoaded', checkTheme)
+document.addEventListener('DOMContentLoaded', checkRating)
+document.addEventListener('DOMContentLoaded', showRating)
+document.addEventListener('click', toggleMenu)
 document.addEventListener('click', toggleTheme)
 document.addEventListener('click', toggleForm)
-window.addEventListener('resize', closeMenu)
 document.querySelector('form').addEventListener('input', validateForm)
+document.querySelector('.star_rating').addEventListener('change', updateRating)
+window.addEventListener('resize', closeMenu)
