@@ -83,10 +83,12 @@ form {
   max-width: 600px;
   background-color: var(--menu_bg_color);
   padding: 3rem;
+  padding-bottom: 0;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 figcaption {
@@ -541,8 +543,8 @@ form {
   -ms-flex-item-align: center;
   -ms-grid-row-align: center;
   align-self: center;
-  margin: 2rem auto;
-  padding: 0.5rem;
+  margin: 1.5rem auto;
+  padding: 0.5rem 2rem;
   border-radius: 1rem;
   border-style: none;
   cursor: pointer;
@@ -611,6 +613,62 @@ form {
   to {
     transform: rotate(0deg);
   }
+}
+
+/* RATING */
+
+.star__wrapper {
+  position: relative;
+  margin-bottom: 2rem;
+  display: flex;
+  opacity: 1;
+  height: 2rem;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.star_rating_result,
+.thanks,
+.star_rating {
+  display: flex;
+  flex-direction: row-reverse;
+  position: absolute;
+  transition: opacity 0.5s linear 0.5s;
+}
+
+.star_rating_result {
+  display: block;
+}
+.star_rating {
+  cursor: pointer;
+  z-index: 2;
+}
+.star_rating_result.hide,
+.thanks.hide,
+.star_rating.hide {
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
+.star_rating input {
+  display: none;
+}
+
+.star {
+  width: 2rem;
+  height: 2rem;
+  font-size: 2rem;
+  transition: 0.2s ease;
+  color: var(--menu_hover);
+}
+
+.star::before {
+  content: "\2606";
+}
+
+.star_rating input:checked ~ .star:before {
+  content: "\2605";
 }
 
 @media screen and (min-width: 768px) {
@@ -769,6 +827,11 @@ form {
 
   .examples__item {
     position: relative;
+  }
+
+  .star_rating label:hover {
+    color: var(--overley_color);
+    transition: 0.2s ease;
   }
 
   .preview {
