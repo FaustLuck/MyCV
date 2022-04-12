@@ -221,6 +221,25 @@
   <aside>
     <div class="popup">
       <form>
+        <div class="star__wrapper">
+          <div class="star_rating">
+            <input type="radio" name="stars" id="star1" value="5" />
+            <label class="star" for="star1"></label>
+            <input type="radio" name="stars" id="star2" value="4" />
+            <label class="star" for="star2"></label>
+            <input type="radio" name="stars" id="star3" value="3" />
+            <label class="star" for="star3"></label>
+            <input type="radio" name="stars" id="star4" value="2" />
+            <label class="star" for="star4"></label>
+            <input type="radio" name="stars" id="star5" value="1" />
+            <label class="star" for="star5"></label>
+          </div>
+          <div class="thanks hide">Thank you for rating</div>
+          <div class="star_rating_result">
+            Average user rating: <span class="grade"></span><br>
+            (Votes: <span class="count"></span>)
+          </div>
+        </div>
         <div class="container">
           <div class="close">
             <img class="icon dark" src="./assets/icons/close-dark.svg" alt="Close">
@@ -255,7 +274,6 @@
   </aside>
 
   <script type="module" src="./assets/scripts/js_min.js" defer></script>
-  <script src="./assets/scripts/preview_min.js" defer></script>
 </body>
 
 </html>
