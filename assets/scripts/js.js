@@ -202,7 +202,7 @@ function removeListeners() {
 
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js'
-import { getDatabase, ref, set, get, update } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js'
+import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCukmuh4VplvLpM3XQzlkGCuyGgX7x2y18",
@@ -313,17 +313,14 @@ function showPreloader() {
 }
 
 /**
- * Считывает инфо из БД о рейтинге
+ * Слушатель изменений в БД
  */
-function checkRating() {
+function listenDB() {
   const db = getDatabase();
-  get(ref(db, 'rating/'))
-    .then(snapshot => {
-      let rating = snapshot.val();
-      updateRatingStorage(rating);
-    }).catch(error => {
-      console.log(error)
-    })
+  onValue(ref(db, 'rating/'), (snapshot) => {
+    let rating = snapshot.val();
+    updateRatingStorage(rating)
+  });
 }
 
 /**
@@ -333,11 +330,9 @@ function checkRating() {
  * @param {Number} param.grade - средняя оценка
  */
 function updateRatingStorage({ count, grade }) {
-  return function () {
-    window.localStorage.setItem('count', count)
-    window.localStorage.setItem('grade', grade)
-    showRating({ count, grade })
-  }
+  window.localStorage.setItem('count', count)
+  window.localStorage.setItem('grade', grade)
+  showRating({ count, grade })
 }
 
 /**
@@ -359,8 +354,8 @@ function updateRating(e) {
   set(ref(db, 'rating/'), rating)
   window.localStorage.setItem('voted', true)
   toggleRatingStyles()
-  document.querySelector('.star_rating_result')
-    .addEventListener('transitionend', updateRatingStorage(rating))
+  // document.querySelector('.star_rating_result')
+  //   .addEventListener('transitionend', () => updateRatingStorage(rating))
 }
 
 /**
@@ -371,7 +366,7 @@ function updateRating(e) {
  */
 function showRating({ count, grade }) {
   let elem = document.querySelector('.star_rating_result');
-  elem.removeEventListener('transitionend', updateRatingStorage({ count, grade }))
+  // elem.removeEventListener('transitionend', () => updateRatingStorage({ count, grade }))
   updateRatingDigits(grade)
   elem.querySelector('.count').textContent = count;
   if (window.localStorage.getItem('voted') == 'true') {
@@ -410,7 +405,6 @@ function getTopNumber(el) {
  * @param {Number} rating - значения рейтинга
  */
 function updateRatingDigits(rating) {
-
   let digits = document.querySelectorAll('.digits');
   let ratingDigits = `${rating}`.split('').filter(e => e != '.')
   digits.forEach((el, i) => scrollDigit(el, ratingDigits[i]))
@@ -600,7 +594,7 @@ function checkValue(value) {
 
 document.addEventListener('DOMContentLoaded', checkMedia)
 document.addEventListener('DOMContentLoaded', checkTheme)
-document.addEventListener('DOMContentLoaded', checkRating)
+document.addEventListener('DOMContentLoaded', listenDB)
 document.addEventListener('DOMContentLoaded', showRating)
 document.addEventListener('click', toggleMenu)
 document.addEventListener('click', toggleTheme)
@@ -608,3 +602,4 @@ document.addEventListener('click', toggleForm)
 document.querySelector('form').addEventListener('input', validateForm)
 document.querySelector('.star_rating').addEventListener('change', updateRating)
 window.addEventListener('resize', closeMenu)
+//listenDB()
