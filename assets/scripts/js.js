@@ -320,12 +320,22 @@ function checkRating() {
   get(ref(db, 'rating/'))
     .then(snapshot => {
       let rating = snapshot.val();
-      window.localStorage.setItem('count', rating.count)
-      window.localStorage.setItem('grade', rating.grade)
-      showRating(rating)
+      updateRatingStorage(rating);
     }).catch(error => {
       console.log(error)
     })
+}
+
+/**
+ * Обновляет данные в LocalStorage
+ * @param {Object} param - принимает объект
+ * @param {Number} param.count - количество голосов
+ * @param {Number} param.grade - средняя оценка
+ */
+function updateRatingStorage({ count, grade }) {
+  window.localStorage.setItem('count', count)
+  window.localStorage.setItem('grade', grade)
+  showRating({ count, grade })
 }
 
 /**
@@ -343,6 +353,7 @@ function updateRating(e) {
     count,
     grade
   }
+  updateRatingStorage(rating);
   const db = getDatabase();
   set(ref(db, 'rating/'), rating)
   window.localStorage.setItem('voted', true)
@@ -387,7 +398,7 @@ function toggleRatingStyles() {
  * @param {HTMLElement} el - элемент для которого необходим предпросмотр
  * @returns {String} HTML единой строкой
  */
- async function fetchData(el) {
+async function fetchData(el) {
   let href = el.href
   let response = await fetch(href);
   let text;
@@ -540,7 +551,7 @@ function checkStorage(target) {
 
 /**
  * Проверяет value на заполненность
- * @param {*} value 
+ * @param {Event} value - событие ввода
  * @returns {Boolean} - true если value неопределено
  */
 function checkValue(value) {
