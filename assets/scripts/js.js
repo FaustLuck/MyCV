@@ -319,7 +319,7 @@ function listenDB() {
   const db = getDatabase();
   onValue(ref(db, 'rating/'), (snapshot) => {
     let rating = snapshot.val();
-    updateRatingStorage(rating)
+    if (rating) updateRatingStorage(rating)
   });
 }
 
@@ -354,8 +354,6 @@ function updateRating(e) {
   set(ref(db, 'rating/'), rating)
   window.localStorage.setItem('voted', true)
   toggleRatingStyles()
-  // document.querySelector('.star_rating_result')
-  //   .addEventListener('transitionend', () => updateRatingStorage(rating))
 }
 
 /**
@@ -366,7 +364,6 @@ function updateRating(e) {
  */
 function showRating({ count, grade }) {
   let elem = document.querySelector('.star_rating_result');
-  // elem.removeEventListener('transitionend', () => updateRatingStorage({ count, grade }))
   updateRatingDigits(grade)
   elem.querySelector('.count').textContent = count;
   if (window.localStorage.getItem('voted') == 'true') {
@@ -406,7 +403,9 @@ function getTopNumber(el) {
  */
 function updateRatingDigits(rating) {
   let digits = document.querySelectorAll('.digits');
-  let ratingDigits = `${rating}`.split('').filter(e => e != '.')
+  let ratingDigits = `${rating}`;
+  ratingDigits = (ratingDigits.includes('.')) ? ratingDigits.padEnd(4, '0') : `${ratingDigits}.00`
+  ratingDigits = ratingDigits.split('').filter(e => e != '.')
   digits.forEach((el, i) => scrollDigit(el, ratingDigits[i]))
 }
 
@@ -472,8 +471,8 @@ function createInfo(el) {
  */
 function createOG_object(el) {
   return el
-    .filter(e => e.indexOf('og:') > -1) //оставляем строки, содержащие OG
-    .map(e => e.replaceAll('\"', '')) //Убираем экранированные ковычки
+    .filter(e => e.indexOf('og:') > -1)
+    .map(e => e.replaceAll('\"', ''))
     .map(createInfo)
 }
 
@@ -602,4 +601,3 @@ document.addEventListener('click', toggleForm)
 document.querySelector('form').addEventListener('input', validateForm)
 document.querySelector('.star_rating').addEventListener('change', updateRating)
 window.addEventListener('resize', closeMenu)
-//listenDB()
