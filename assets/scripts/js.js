@@ -333,9 +333,11 @@ function checkRating() {
  * @param {Number} param.grade - средняя оценка
  */
 function updateRatingStorage({ count, grade }) {
-  window.localStorage.setItem('count', count)
-  window.localStorage.setItem('grade', grade)
-  showRating({ count, grade })
+  return function () {
+    window.localStorage.setItem('count', count)
+    window.localStorage.setItem('grade', grade)
+    showRating({ count, grade })
+  }
 }
 
 /**
@@ -353,11 +355,12 @@ function updateRating(e) {
     count,
     grade
   }
-  updateRatingStorage(rating);
   const db = getDatabase();
   set(ref(db, 'rating/'), rating)
   window.localStorage.setItem('voted', true)
   toggleRatingStyles()
+  document.querySelector('.star_rating_result')
+    .addEventListener('transitionend', updateRatingStorage(rating))
 }
 
 /**
@@ -368,7 +371,8 @@ function updateRating(e) {
  */
 function showRating({ count, grade }) {
   let elem = document.querySelector('.star_rating_result');
-  elem.querySelector('.grade').textContent = grade;
+  elem.removeEventListener('transitionend', updateRatingStorage({ count, grade }))
+  updateRatingDigits(grade)
   elem.querySelector('.count').textContent = count;
   if (window.localStorage.getItem('voted') == 'true') {
     document.querySelector('.star_rating').classList.add('hide')
@@ -377,9 +381,45 @@ function showRating({ count, grade }) {
 }
 
 /**
+ * Скроллинг цифр
+ * @param {HTMLElement} el - контейнер с числами для сдвига
+ * @param {Number} endDigit - конечное число
+ */
+function scrollDigit(el, endDigit) {
+  let startTop = getTopNumber(el)
+  let endTop = endDigit * (-16)
+  let offset = (endTop - startTop) / 100;
+  let start = setInterval(() => {
+    el.style.marginTop = getTopNumber(el) + offset + 'px'
+    if (getTopNumber(el) == endDigit * (-16)) clearInterval(start)
+  }, 10)
+}
+
+/**
+ * возвращает значение margin-top элемента
+ * @param {HTMLElement} el - контейнер с числом
+ * @returns {Number} margin-top элемента
+ */
+function getTopNumber(el) {
+  let offset = window.getComputedStyle(el).marginTop
+  return +offset.split('px')[0]
+}
+
+/**
+ * обновляет значение рейтинга в форме
+ * @param {Number} rating - значения рейтинга
+ */
+function updateRatingDigits(rating) {
+
+  let digits = document.querySelectorAll('.digits');
+  let ratingDigits = `${rating}`.split('').filter(e => e != '.')
+  digits.forEach((el, i) => scrollDigit(el, ratingDigits[i]))
+}
+
+/**
  * После голосования последовательно
  * 1) убирает блок со звездами, вместо него говорит "Спасибо"
- * 2) убирает благодарности и покахываем статистику голосования
+ * 2) убирает благодарности и показывает статистику голосования
  */
 function toggleRatingStyles() {
   let thanks = document.querySelector('.thanks');
