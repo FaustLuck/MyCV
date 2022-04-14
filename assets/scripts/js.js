@@ -224,6 +224,10 @@ const errors = {
   ru: 'Что-то пошло не так',
   en: 'Something went wrong'
 }
+const sayThanks = {
+  ru: 'Благодарю за оценку',
+  en: 'Thank you for rating'
+}
 
 /**
  * Отправка данных в firebase-database
@@ -239,7 +243,7 @@ function setData() {
       showResult(done[lang]);
       setTimeout(returnStyles, 1000)
     })
-    .catch((error) => {
+    .catch(error => {
       showResult(errors[lang], error);
       setTimeout(returnStyles, 1000)
     });
@@ -281,8 +285,10 @@ function returnStyles() {
   form.reset();
   form.removeAttribute('style')
   form.querySelector('.container').removeAttribute('style');
-  document.querySelector('.popup').classList.remove('open')
-  document.querySelector('.overley.form').classList.remove('open')
+  document.querySelector('.popup').classList.remove('open');
+  document.querySelector('.overley.form').classList.remove('open');
+  document.body.classList.remove('fixed')
+  toggleWritingIcon()
 }
 
 /**
@@ -352,8 +358,34 @@ function updateRating(e) {
   }
   const db = getDatabase();
   set(ref(db, 'rating/'), rating)
-  window.localStorage.setItem('voted', true)
-  toggleRatingStyles()
+    .then(() => {
+      window.localStorage.setItem('voted', true)
+      toggleRatingStyles()
+    })
+    .catch(error => {
+      e.target.checked = false;
+      toggleRatingStyles(true)
+      console.log(error)
+    })
+}
+
+/**
+ * После голосования последовательно
+ * 1) убирает блок со звездами, вместо него говорит "Спасибо"
+ * 2) убирает благодарности и показывает статистику голосования
+ */
+function toggleRatingStyles(errorFlag = false) {
+  let lang = document.documentElement.lang;
+  let thanks = document.querySelector('.thanks');
+  let stars = document.querySelector('.star_rating')
+  let ratingResult = document.querySelector('.star_rating_result')
+  stars.classList.add('hide')
+  thanks.textContent = (errorFlag) ? errors[lang] : sayThanks[lang];
+  thanks.classList.remove('hide')
+  setTimeout(() => {
+    thanks.classList.add('hide');
+    (errorFlag) ? stars.classList.remove('hide') : ratingResult.classList.remove('hide');
+  }, 2000)
 }
 
 /**
@@ -407,23 +439,6 @@ function updateRatingDigits(rating) {
   ratingDigits = (ratingDigits.includes('.')) ? ratingDigits.padEnd(4, '0') : `${ratingDigits}.00`
   ratingDigits = ratingDigits.split('').filter(e => e != '.')
   digits.forEach((el, i) => scrollDigit(el, ratingDigits[i]))
-}
-
-/**
- * После голосования последовательно
- * 1) убирает блок со звездами, вместо него говорит "Спасибо"
- * 2) убирает благодарности и показывает статистику голосования
- */
-function toggleRatingStyles() {
-  let thanks = document.querySelector('.thanks');
-  let stars = document.querySelector('.star_rating')
-  let ratingResult = document.querySelector('.star_rating_result')
-  stars.classList.add('hide')
-  thanks.classList.remove('hide')
-  setTimeout(() => {
-    thanks.classList.add('hide')
-    ratingResult.classList.remove('hide')
-  }, 2000)
 }
 
 /**
