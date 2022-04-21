@@ -202,7 +202,7 @@ function removeListeners() {
 
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js'
-import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js'
+import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCukmuh4VplvLpM3XQzlkGCuyGgX7x2y18",
