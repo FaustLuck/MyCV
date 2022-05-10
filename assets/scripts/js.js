@@ -365,7 +365,6 @@ function updateRating(e) {
     .catch(error => {
       e.target.checked = false;
       toggleRatingStyles(true)
-      console.log(error)
     })
 }
 
@@ -447,7 +446,7 @@ function updateRatingDigits(rating) {
  * @returns {String} HTML единой строкой
  */
 async function fetchData(el) {
-  let href = el.href
+  let href = el.target.href
   let response = await fetch(href);
   let text;
   if (response.ok) {
@@ -464,7 +463,7 @@ async function fetchData(el) {
  * @returns {[String]} HTML разделенный на строки
  */
 function splitData(el) {
-  return el.split('\n')
+  return el.split(/>(\\n)?(\s+)?</).filter(e => e)
 }
 
 /**
@@ -489,6 +488,7 @@ function createOG_object(el) {
     .filter(e => e.indexOf('og:') > -1)
     .map(e => e.replaceAll('\"', ''))
     .map(createInfo)
+
 }
 
 /**
@@ -500,7 +500,7 @@ function prepareData(data) {
   let output = {};
   output.title = data.find(e => e.property == 'title').value;
   output.description = data.find(e => e.property == 'description').value;
-  let url = data.find(e => e.property == 'url').value.replace('index.html', '');
+  let url = data.find(e => e.property == 'url').value;
   let src = data.find(e => e.property == 'image').value.replace('./', '');
   output.src = url + src;
   return output;
@@ -526,8 +526,7 @@ function getProperty(str) {
 function getContent(str) {
   let search = 'content=';
   let start = str.indexOf(search);
-  let end = str.indexOf('>', start);
-  return str.substring(start + search.length, end)
+  return str.substring(start + search.length, str.length)
 }
 
 /**
@@ -560,10 +559,13 @@ async function checkMedia() {
  * @param {[String]} array - данные для сохранения
  */
 function saveData(array) {
-  array = array.map(el => {
-    window.localStorage.setItem(el.title, el.description)
-    window.localStorage.setItem(`${el.title}-src`, el.src)
-  });
+  array.forEach(el => {
+    let obj = {
+      description: el.description,
+      src: el.src
+    }
+    window.localStorage.setItem(el.title, JSON.stringify(obj))
+  })
 }
 
 /**
@@ -590,10 +592,10 @@ function addData(data) {
  */
 function checkStorage(target) {
   let output = {}
+  let obj = JSON.parse(window.localStorage.getItem(target.textContent))
+  output = { ...obj }
   output.target = target;
   output.title = target.textContent;
-  output.description = window.localStorage.getItem(target.textContent);
-  output.src = window.localStorage.getItem(`${target.textContent}-src`)
   return (checkValue(output)) ? target : output
 }
 
