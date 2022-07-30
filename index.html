@@ -63,7 +63,7 @@
     <div class="writing">
       <img class="icon dark" src="./assets/icons/writing-dark.svg" alt="Открыть форму для связи со мной">
     </div>
-    <div class="overley"></div>
+    <div class="overlay"></div>
   </header>
   <section class="title" id="top">
     <div class="avatar__wrapper">
@@ -211,6 +211,16 @@
           </div>
         </div>
       </li>
+      <li>
+        <div class="examples__item">
+          <a class="example" href="https://faustluck.github.io/Aim-game/" target="_blank">Aim Trainer</a>
+          <div class="preview empty">
+            <h3 class="preview_title"></h3>
+            <div class="preview_description"></div>
+            <img class="preview_img" src="" alt="">
+          </div>
+        </div>
+      </li>
     </ul>
   </section>
   <footer id="contacts">
@@ -297,20 +307,21 @@
           </div>
           <div>
             <div class="field">
-              <label>Ваше имя:</label>
-              <input class="invalid" type="text" name="name" placeholder="Введите имя..." required>
+              <label>Ваше имя:
+                <input class="invalid" type="text" name="name" placeholder="Введите имя..." required></label>
             </div>
             <div class="field">
-              <label>Ваш Email:</label>
-              <input class="invalid" type="email" name="email" placeholder="Введите email..." required>
+              <label>Ваш Email:
+                <input class="invalid" type="email" name="email" placeholder="Введите email..." required></label>
             </div>
           </div>
-          <label>Ваше сообщение:</label>
+          <label for="message">Ваше сообщение:</label>
           <div class="message">
-            <textarea class="invalid" rows="5" name="message" required placeholder="Ваше сообщение..."></textarea>
+            <textarea class="invalid" rows="5" name="message" id="message" required
+                      placeholder="Ваше сообщение..."></textarea>
           </div>
           <input type="button" class="submit inactive" value="Отправить" name="send">
-          <input class="bucket" type="text" name="bucket">
+          <label><input class="bucket" type="text" name="bucket"></label>
         </div>
         <div class="preloader">
           <div class="outer circle">
@@ -321,7 +332,7 @@
         <div class="result"></div>
       </form>
     </div>
-    <div class="overley form"></div>
+    <div class="overlay form"></div>
   </aside>
   <script type="module" src="./assets/scripts/js_min.js" defer></script>
 
