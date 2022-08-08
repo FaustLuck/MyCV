@@ -1,17 +1,18 @@
 /**
  * Открытие/Закрытие меню
  * @param {Event} e - событие клика на меню
+ * @param flag
  */
 function toggleMenu(e, flag = true) {
   if (flag) {
-    if (window.matchMedia('(min-width: 768px)').matches) return;
-    if (!(e.target.closest('.menu') || e.target.closest('.burger') || e.target.closest('.overley:not(form'))) return;
+    if (window.matchMedia("(min-width: 768px)").matches) return;
+    if (!(e.target.closest(".menu") || e.target.closest(".burger") || e.target.closest(".overlay:not(form)"))) return;
   }
-  let menu = document.querySelector('.menu');
-  menu.classList.toggle('open');
-  flag = menu.classList.contains('open');
-  document.querySelector('.writing').classList.toggle('left', flag);
-  toggleOverley(flag);
+  let menu = document.querySelector(".menu");
+  menu.classList.toggle("open");
+  flag = menu.classList.contains("open");
+  document.querySelector(".writing").classList.toggle("left", flag);
+  toggleOverlay(flag);
   toggleBurger(flag);
 }
 
@@ -27,12 +28,13 @@ function toggleBurger(flag) {
 /**
  * Скрывает/отображает оверлей
  * @param {Boolean} flag - если true -> отобразить оверлей
+ * @param form
  */
-function toggleOverley(flag, form = '') {
-  if (form) form = `.${form}`
-  let overley = document.querySelector(`.overley${form}`);
-  overley.classList.toggle('open', flag);
-  toggleOverflow(flag)
+function toggleOverlay(flag, form = "") {
+  if (form) form = `.${form}`;
+  let overlay = document.querySelector(`.overlay${form}`);
+  overlay.classList.toggle("open", flag);
+  toggleOverflow(flag);
 }
 
 /**
@@ -47,15 +49,15 @@ function toggleOverflow(flag) {
  * Проверка сохранена ли предпочитаемая тема
  */
 function checkTheme() {
-  let isDark = window.localStorage.getItem('dark');
-  if (isDark == 'false' || isDark == null) {
-    window.localStorage.setItem('dark', 'false')
-    document.body.classList.add('light')
+  let isDark = window.localStorage.getItem("dark");
+  if (isDark === "false" || isDark === null) {
+    window.localStorage.setItem("dark", "false");
+    document.body.classList.add("light");
   } else {
-    window.localStorage.setItem('dark', 'true')
-    document.body.classList.add('dark')
+    window.localStorage.setItem("dark", "true");
+    document.body.classList.add("dark");
   }
-  toggleIcon()
+  toggleIcon();
 }
 
 /**
@@ -63,8 +65,7 @@ function checkTheme() {
  */
 function toggleIcon() {
   let icons = document.querySelectorAll('.icon');
-  icons = Array.from(icons);
-  icons = icons.map(toggleSrc)
+  icons.forEach(toggleSrc);
 }
 
 /**
@@ -72,11 +73,11 @@ function toggleIcon() {
  * @param {Object} el - иконка путь которой надо заменить
  */
 function toggleSrc(el) {
-  let sep = (window.localStorage.getItem('dark') == 'true') ? 'dark' : 'light';
-  let newSep = (window.localStorage.getItem('dark') == 'true') ? 'light' : 'dark';
-  let tmp = el.src.split(sep)
-  tmp = tmp.join(newSep)
-  el.src = tmp
+  let sep = (window.localStorage.getItem("dark") === "true") ? "dark" : "light";
+  let newSep = (window.localStorage.getItem("dark") === "true") ? "light" : "dark";
+  let tmp = el.src.split(sep);
+  tmp = tmp.join(newSep);
+  el.src = tmp;
 }
 
 /**
@@ -84,13 +85,13 @@ function toggleSrc(el) {
  * @param {Event} e - событие клика переключения темы
  */
 function toggleTheme(e) {
-  if (!e.target.closest('.theme')) return;
-  let isDark = window.localStorage.getItem('dark')
-  isDark = (isDark == 'true') ? false : true;
-  window.localStorage.setItem('dark', isDark)
-  document.body.classList.toggle('dark', isDark)
-  document.body.classList.toggle('light', !isDark)
-  toggleIcon()
+  if (!e.target.closest(".theme")) return;
+  let isDark = window.localStorage.getItem("dark");
+  isDark = (isDark !== "true");
+  window.localStorage.setItem("dark", `${isDark}`);
+  document.body.classList.toggle("dark", isDark);
+  document.body.classList.toggle("light", !isDark);
+  toggleIcon();
 }
 
 /**
@@ -110,16 +111,16 @@ function toggleWritingIcon(flag) {
  * @returns 
  */
 function toggleForm(e) {
-  if (!(e.target.closest('.writing') || e.target.closest('.close'))) return;
-  let popup = document.querySelector('.popup');
-  if (e.target.closest('.close')) document.forms[0].reset();
-  popup.classList.toggle('open')
-  let flag = popup.classList.contains('open');
-  (flag) ? addListeners() : removeListeners()
-  let overley_menu = document.querySelector('.overley')
-  if (overley_menu.classList.contains('open')) toggleMenu(null, !flag)
-  toggleOverley(flag, 'form')
-  toggleWritingIcon(flag)
+  if (!(e.target.closest(".writing") || e.target.closest(".close"))) return;
+  let popup = document.querySelector(".popup");
+  if (e.target.closest(".close")) document.forms[0].reset();
+  popup.classList.toggle("open");
+  let flag = popup.classList.contains("open");
+  (flag) ? addListeners() : removeListeners();
+  let overley_menu = document.querySelector(".overlay");
+  if (overley_menu.classList.contains("open")) toggleMenu(null, !flag);
+  toggleOverlay(flag, "form");
+  toggleWritingIcon(flag);
 }
 
 /**
@@ -127,15 +128,14 @@ function toggleForm(e) {
  */
 function closeMenu() {
   if (window.matchMedia('(min-width: 768px) and (orientation:landscape)').matches) {
-    let overley_menu = document.querySelector('.overley');
-    let flag = overley_menu.classList.contains('open');
-    if (flag) toggleMenu(null, !flag)
+    let overley_menu = document.querySelector(".overlay");
+    let flag = overley_menu.classList.contains("open");
+    if (flag) toggleMenu(null, !flag);
   }
 }
 
 /**
  * Проверка адреса эл. почты
- * @param {String} email - адрес электронной почты
  * @returns {Boolean} true если проверка пройдена
  */
 function validateEmail(e) {
@@ -177,10 +177,10 @@ function addListeners() {
   let textarea = form.querySelector('textarea');
   inputs = [...inputs, textarea];
   inputs.forEach(el => {
-    if (el.type == 'email') return el.addEventListener('input', validateEmail)
-    if (el.classList.contains('bucket')) return;
-    if (el.type == 'radio') return;
-    el.addEventListener('input', isEmpty)
+    if (el.type === "email") return el.addEventListener("input", validateEmail);
+    if (el.classList.contains("bucket")) return;
+    if (el.type === "radio") return;
+    el.addEventListener("input", isEmpty);
   })
 }
 
@@ -193,16 +193,16 @@ function removeListeners() {
   let textarea = form.querySelector('textarea');
   inputs = [...inputs, textarea];
   inputs.forEach(el => {
-    if (el.type == 'email') return el.removeEventListener('input', validateEmail)
-    if (el.classList.contains('bucket')) return;
-    if (el.type == 'radio') return;
-    el.removeEventListener('input', isEmpty)
-  })
+    if (el.type === "email") return el.removeEventListener("input", validateEmail);
+    if (el.classList.contains("bucket")) return;
+    if (el.type === "radio") return;
+    el.removeEventListener("input", isEmpty);
+  });
 }
 
 
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js'
-import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js'
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+import { getDatabase, onValue, ref, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCukmuh4VplvLpM3XQzlkGCuyGgX7x2y18",
@@ -261,7 +261,6 @@ function createIDmsg() {
 
 /**
  * создание объекта для сохранения сообщения
- * @param {Object} e - событие отправки формы
  * @returns {Object} - объект для записи в БД
  */
 function createData() {
@@ -277,18 +276,18 @@ function createData() {
  * Сбрасывает стили на стандартные
  */
 function returnStyles() {
-  let output = document.querySelector('.result');
-  output.textContent = ''
-  output.classList.remove('show');
-  output.classList.remove('error');
+  let output = document.querySelector(".result");
+  output.textContent = "";
+  output.classList.remove("show");
+  output.classList.remove("error");
   let form = document.forms[0];
   form.reset();
-  form.removeAttribute('style')
-  form.querySelector('.container').removeAttribute('style');
-  document.querySelector('.popup').classList.remove('open');
-  document.querySelector('.overley.form').classList.remove('open');
-  document.body.classList.remove('fixed')
-  toggleWritingIcon()
+  form.removeAttribute("style");
+  form.querySelector(".container").removeAttribute("style");
+  document.querySelector(".popup").classList.remove("open");
+  document.querySelector(".overlay.form").classList.remove("open");
+  document.body.classList.remove("fixed");
+  toggleWritingIcon();
 }
 
 /**
@@ -306,7 +305,7 @@ function showResult(result, error = false) {
 }
 
 /**
- * Показывает прелоадер, пока ожидается ответ от Бд
+ * Показывает preloader, пока ожидается ответ от Бд
  */
 function showPreloader() {
   let preloader = document.querySelector('.preloader');
@@ -336,9 +335,9 @@ function listenDB() {
  * @param {Number} param.grade - средняя оценка
  */
 function updateRatingStorage({ count, grade }) {
-  window.localStorage.setItem('count', count)
-  window.localStorage.setItem('grade', grade)
-  showRating({ count, grade })
+  window.localStorage.setItem("count", `${count}`);
+  window.localStorage.setItem("grade", `${grade}`);
+  showRating({count, grade});
 }
 
 /**
@@ -394,12 +393,12 @@ function toggleRatingStyles(errorFlag = false) {
  * @param {Number} param.grade - средняя оценка
  */
 function showRating({ count, grade }) {
-  let elem = document.querySelector('.star_rating_result');
-  updateRatingDigits(grade)
-  elem.querySelector('.count').textContent = count;
-  if (window.localStorage.getItem('voted') == 'true') {
-    document.querySelector('.star_rating').classList.add('hide')
-    elem.classList.remove('hide')
+  let elem = document.querySelector(".star_rating_result");
+  updateRatingDigits(grade);
+  elem.querySelector(".count").textContent = `${count}`;
+  if (window.localStorage.getItem("voted") === "true") {
+    document.querySelector(".star_rating").classList.add("hide");
+    elem.classList.remove("hide");
   }
 }
 
@@ -414,7 +413,7 @@ function scrollDigit(el, endDigit) {
   let offset = (endTop - startTop) / 100;
   let start = setInterval(() => {
     el.style.marginTop = getTopNumber(el) + offset + 'px'
-    if (getTopNumber(el) == endDigit * (-16)) clearInterval(start)
+    if (getTopNumber(el) === endDigit * (-16)) clearInterval(start);
   }, 10)
 }
 
@@ -435,9 +434,9 @@ function getTopNumber(el) {
 function updateRatingDigits(rating) {
   let digits = document.querySelectorAll('.digits');
   let ratingDigits = `${rating}`;
-  ratingDigits = (ratingDigits.includes('.')) ? ratingDigits.padEnd(4, '0') : `${ratingDigits}.00`
-  ratingDigits = ratingDigits.split('').filter(e => e != '.')
-  digits.forEach((el, i) => scrollDigit(el, ratingDigits[i]))
+  ratingDigits = (ratingDigits.includes(".")) ? ratingDigits.padEnd(4, "0") : `${ratingDigits}.00`;
+  ratingDigits = ratingDigits.split("").filter(e => e !== ".");
+  digits.forEach((el, i) => scrollDigit(el, ratingDigits[i]));
 }
 
 /**
@@ -469,7 +468,7 @@ function splitData(el) {
 /**
  * Извекает данные OG
  * @param {String} el - HTML строка
- * @returns {Object} - данные из HTML в удобном формате (свойство : значение)
+ * @returns {Object} - данные из HTML в удобном формате (свойство: значение)
  */
 function createInfo(el) {
   return {
@@ -498,10 +497,10 @@ function createOG_object(el) {
  */
 function prepareData(data) {
   let output = {};
-  output.title = data.find(e => e.property == 'title').value;
-  output.description = data.find(e => e.property == 'description').value;
-  let url = data.find(e => e.property == 'url').value;
-  let src = data.find(e => e.property == 'image').value.replace('./', '');
+  output.title = data.find(e => e.property === "title").value;
+  output.description = data.find(e => e.property === "description").value;
+  let url = data.find(e => e.property === "url").value;
+  let src = data.find(e => e.property === "image").value.replace("./", "");
   output.src = url + src;
   return output;
 }
@@ -547,7 +546,7 @@ async function checkMedia() {
     mustFetch = mustFetch.map(splitData).map(createOG_object).map(prepareData)
     saveData(mustFetch)
     mustFetch.map(el => {
-      el.target = examples.find(e => e.text == el.title)
+      el.target = examples.find(e => e.text === el.title);
     })
   }
   readyToAdd = [...readyToAdd, ...mustFetch]
@@ -591,9 +590,8 @@ function addData(data) {
  *  в противном случае объект для заполнения
  */
 function checkStorage(target) {
-  let output = {}
-  let obj = JSON.parse(window.localStorage.getItem(target.textContent))
-  output = { ...obj }
+  let obj = JSON.parse(window.localStorage.getItem(target.textContent));
+  let output = {...obj};
   output.target = target;
   output.title = target.textContent;
   return (checkValue(output)) ? target : output

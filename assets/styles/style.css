@@ -203,7 +203,7 @@ input::placeholder {
   margin: 0;
 }
 
-.overley {
+.overlay {
   position: fixed;
   z-index: 5;
   opacity: 0;
@@ -225,7 +225,7 @@ input::placeholder {
   cursor: auto;
 }
 
-.overley.open {
+.overlay.open {
   width: 100%;
   opacity: 0.8;
   top: 0;
@@ -530,7 +530,7 @@ form {
   height: 1.5rem;
 }
 
-.overley.open.form {
+.overlay.open.form {
   z-index: 15;
 }
 
