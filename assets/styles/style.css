@@ -381,8 +381,6 @@ form {
 }
 
 .field label {
-  display: block;
-  float: left;
   width: 7rem;
   height: 1rem;
 }
@@ -394,6 +392,7 @@ form {
 .message * {
   display: block;
   width: 100%;
+  max-width: 100%;
 }
 
 .close {
