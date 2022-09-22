@@ -50,34 +50,33 @@ function toggleOverflow(flag) {
  */
 function checkTheme() {
   let isDark = window.localStorage.getItem("dark");
-  if (isDark === "false" || isDark === null) {
-    window.localStorage.setItem("dark", "false");
-    document.body.classList.add("light");
-  } else {
-    window.localStorage.setItem("dark", "true");
-    document.body.classList.add("dark");
-  }
-  toggleIcon();
+  isDark = (isDark === null) ? checkPreferColorScheme() : isDark === "true";
+  document.body.classList.toggle("dark", isDark);
+  document.body.classList.toggle("light", !isDark);
+  toggleIcon(isDark);
+}
+
+function checkPreferColorScheme() {
+  return window.matchMedia("(prefers-color-scheme:dark)").matches;
+}
+
+/**
+ * Сохраняет выбранную тему
+ * @param isDark {Boolean}
+ */
+function savePreferTheme(isDark) {
+  window.localStorage.setItem("dark", `${isDark}`);
 }
 
 /**
  * Переключение иконок в зависимости от темы
  */
-function toggleIcon() {
-  let icons = document.querySelectorAll('.icon');
-  icons.forEach(toggleSrc);
-}
-
-/**
- * Редактирование путей иконок в зависимости от темы
- * @param {Object} el - иконка путь которой надо заменить
- */
-function toggleSrc(el) {
-  let sep = (window.localStorage.getItem("dark") === "true") ? "dark" : "light";
-  let newSep = (window.localStorage.getItem("dark") === "true") ? "light" : "dark";
-  let tmp = el.src.split(sep);
-  tmp = tmp.join(newSep);
-  el.src = tmp;
+function toggleIcon(isDark) {
+  let icons = document.querySelectorAll(".icon");
+  let [oldSep, newSep] = isDark ? ["dark", "light"] : ["light", "dark"];
+  icons.forEach(icon => {
+    icon.src = icon.src.replaceAll(oldSep, newSep);
+  });
 }
 
 /**
@@ -86,12 +85,11 @@ function toggleSrc(el) {
  */
 function toggleTheme(e) {
   if (!e.target.closest(".theme")) return;
-  let isDark = window.localStorage.getItem("dark");
-  isDark = (isDark !== "true");
-  window.localStorage.setItem("dark", `${isDark}`);
+  let isDark = !document.body.classList.contains("dark");
   document.body.classList.toggle("dark", isDark);
   document.body.classList.toggle("light", !isDark);
-  toggleIcon();
+  savePreferTheme(isDark);
+  toggleIcon(isDark);
 }
 
 /**
@@ -103,7 +101,6 @@ function toggleWritingIcon(flag) {
   writingIcon.classList.toggle('hide', flag)
   writingIcon.classList.remove('left')
 }
-
 
 /**
  * 
@@ -117,8 +114,8 @@ function toggleForm(e) {
   popup.classList.toggle("open");
   let flag = popup.classList.contains("open");
   (flag) ? addListeners() : removeListeners();
-  let overley_menu = document.querySelector(".overlay");
-  if (overley_menu.classList.contains("open")) toggleMenu(null, !flag);
+  let overlay_menu = document.querySelector(".overlay");
+  if (overlay_menu.classList.contains("open")) toggleMenu(null, !flag);
   toggleOverlay(flag, "form");
   toggleWritingIcon(flag);
 }
@@ -361,7 +358,7 @@ function updateRating(e) {
       window.localStorage.setItem('voted', true)
       toggleRatingStyles()
     })
-    .catch(error => {
+    .catch(() => {
       e.target.checked = false;
       toggleRatingStyles(true)
     })
