@@ -8,5 +8,5 @@
 <img src="assets/image/preview.png" alt="drawing" style="width:200px; display: flex; align-self: center"/>
 </p>
 <p align="center">
-Файлы <a href="assets/styles">CSS</a> и <a href="assets/scripts">JS</a> минмифицированы для ускорения загрузки
+Файлы <a href="assets/styles">CSS</a> и <a href="assets/scripts">JS</a> минимизированы для ускорения загрузки
 </p>
