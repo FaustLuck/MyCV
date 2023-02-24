@@ -345,7 +345,6 @@ function toggleRatingStyles(errorFlag, data = null) {
  * @param {Number} param.rating - средняя оценка
  */
 function showRating({count, rating}) {
-  console.log({count, rating});
   let elem = document.querySelector(".star_rating_result");
   updateRatingDigits(+rating);
   elem.querySelector(".count").textContent = `${count}`;
