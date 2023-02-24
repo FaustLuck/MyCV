@@ -162,7 +162,7 @@ function validateForm() {
   if (form.bucket.value) return false
   let invalid = Boolean(form.querySelectorAll('.invalid').length)
   submit.classList.toggle('inactive', invalid)
-  if (!invalid) submit.addEventListener('click', setData)
+  if (!invalid) submit.addEventListener("click", saveMessage);
 }
 
 /**
@@ -197,22 +197,6 @@ function removeListeners() {
   });
 }
 
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getDatabase, onValue, ref, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCukmuh4VplvLpM3XQzlkGCuyGgX7x2y18",
-  authDomain: "grastor-messagestorage.firebaseapp.com",
-  databaseURL: "https://grastor-messagestorage-default-rtdb.firebaseio.com",
-  projectId: "grastor-messagestorage",
-  storageBucket: "grastor-messagestorage.appspot.com",
-  messagingSenderId: "189811633204",
-  appId: "1:189811633204:web:cddbbdee2964375bd86e61",
-  measurementId: "G-G4SXGQZLE1"
-};
-
-const app = initializeApp(firebaseConfig);
 const done = {
   ru: 'Данные записаны',
   en: 'Data recorded'
@@ -229,31 +213,21 @@ const sayThanks = {
 /**
  * Отправка данных в firebase-database
  */
-function setData() {
+async function saveMessage() {
   let lang = document.documentElement.lang;
   showPreloader();
-  let id = createIDmsg();
   let data = createData();
-  const db = getDatabase();
-  set(ref(db, 'messages/' + id), data)
-    .then(() => {
-      showResult(done[lang]);
-      setTimeout(returnStyles, 1000)
-    })
-    .catch(error => {
-      showResult(errors[lang], error);
-      setTimeout(returnStyles, 1000)
-    });
-}
-
-/**
- * Создание ID сообщения на основании времени отправки
- * @returns {String} - строка с датой отправки
- */
-function createIDmsg() {
-  let str = (new Date).toLocaleString('ru-RU');
-  str = str.replaceAll(/[\.:]/g, '-').replace(/,/, '')
-  return str
+  let res = await fetch(`https://englishspace-1-g1233964.deta.app/saveMessage`, {
+    headers: {"Content-Type": "application/json"},
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+  if (res.ok) {
+    showResult(done[lang]);
+  } else {
+    showResult(errors[lang], true);
+  }
+  setTimeout(returnStyles, 1000);
 }
 
 /**
@@ -263,6 +237,7 @@ function createIDmsg() {
 function createData() {
   let form = document.forms[0];
   return {
+    timestamp: Date.now(),
     name: form.name.value,
     email: form.email.value,
     message: form.message.value
@@ -290,7 +265,7 @@ function returnStyles() {
 /**
  * Показывает результат отправки данных в БД
  * @param {String} result - результат записи данных в БД
- * @param {Error} error - ошибка записи данных в БД
+ * @param {boolean} error - ошибка записи данных в БД
  */
 function showResult(result, error = false) {
   let preloader = document.querySelector('.preloader');
@@ -305,63 +280,42 @@ function showResult(result, error = false) {
  * Показывает preloader, пока ожидается ответ от Бд
  */
 function showPreloader() {
-  let preloader = document.querySelector('.preloader');
+  let preloader = document.querySelector(".preloader");
   let form = document.forms[0];
-  let [width, height] = [form.offsetWidth - 96, form.offsetHeight - 96]
-  form.querySelector('.container').style.display = 'none'
-  form.style.width = width + 'px';
-  form.style.height = height + 'px';
-  preloader.classList.add('show')
+  let [width, height] = [form.offsetWidth - 96, form.offsetHeight - 96];
+  form.querySelector(".container").style.display = "none";
+  form.style.width = width + "px";
+  form.style.height = height + "px";
+  preloader.classList.add("show");
 }
 
 /**
- * Слушатель изменений в БД
+ * Получение значения рейтинга из БД
  */
-function listenDB() {
-  const db = getDatabase();
-  onValue(ref(db, 'rating/'), (snapshot) => {
-    let rating = snapshot.val();
-    if (rating) updateRatingStorage(rating)
-  });
-}
-
-/**
- * Обновляет данные в LocalStorage
- * @param {Object} param - принимает объект
- * @param {Number} param.count - количество голосов
- * @param {Number} param.grade - средняя оценка
- */
-function updateRatingStorage({ count, grade }) {
-  window.localStorage.setItem("count", `${count}`);
-  window.localStorage.setItem("grade", `${grade}`);
-  showRating({count, grade});
+async function getRating() {
+  let res = await fetch(`https://englishspace-1-g1233964.deta.app/getRating`);
+  if (res.ok) {
+    const data = await res.json();
+    showRating(data);
+  }
 }
 
 /**
  * Отпровляет в БД новые данные по рейтингу
  * @param {Event} e - выбор оценки пользователя
  */
-function updateRating(e) {
+async function updateRating(e) {
   let value = +e.target.value;
-  let count = +window.localStorage.getItem('count');
-  let grade = +window.localStorage.getItem('grade')
-  grade = (grade * count + value) / (count + 1);
-  grade = +grade.toFixed(2)
-  count++;
-  let rating = {
-    count,
-    grade
+  let res = await fetch(`https://englishspace-1-g1233964.deta.app/addGrade/${value}`);
+  if (res.ok) {
+    window.localStorage.setItem("voted", "true");
+    const data = await res.json();
+    toggleRatingStyles(false, data);
+    // showRating(data);
+  } else {
+    e.target.checked = false;
+    toggleRatingStyles(true);
   }
-  const db = getDatabase();
-  set(ref(db, 'rating/'), rating)
-    .then(() => {
-      window.localStorage.setItem('voted', true)
-      toggleRatingStyles()
-    })
-    .catch(() => {
-      e.target.checked = false;
-      toggleRatingStyles(true)
-    })
 }
 
 /**
@@ -369,29 +323,31 @@ function updateRating(e) {
  * 1) убирает блок со звездами, вместо него говорит "Спасибо"
  * 2) убирает благодарности и показывает статистику голосования
  */
-function toggleRatingStyles(errorFlag = false) {
+function toggleRatingStyles(errorFlag, data = null) {
   let lang = document.documentElement.lang;
-  let thanks = document.querySelector('.thanks');
-  let stars = document.querySelector('.star_rating')
-  let ratingResult = document.querySelector('.star_rating_result')
-  stars.classList.add('hide')
+  let thanks = document.querySelector(".thanks");
+  let stars = document.querySelector(".star_rating");
+  let ratingResult = document.querySelector(".star_rating_result");
+  stars.classList.add("hide");
   thanks.textContent = (errorFlag) ? errors[lang] : sayThanks[lang];
-  thanks.classList.remove('hide')
+  thanks.classList.remove("hide");
   setTimeout(() => {
-    thanks.classList.add('hide');
-    (errorFlag) ? stars.classList.remove('hide') : ratingResult.classList.remove('hide');
-  }, 2000)
+    thanks.classList.add("hide");
+    (errorFlag) ? stars.classList.remove("hide") : ratingResult.classList.remove("hide");
+    if (data) showRating(data);
+  }, 2000);
 }
 
 /**
  * Подставляет значения в строку
  * @param {Object} param - принимает объект
  * @param {Number} param.count - количество голосов
- * @param {Number} param.grade - средняя оценка
+ * @param {Number} param.rating - средняя оценка
  */
-function showRating({ count, grade }) {
+function showRating({count, rating}) {
+  console.log({count, rating});
   let elem = document.querySelector(".star_rating_result");
-  updateRatingDigits(grade);
+  updateRatingDigits(+rating);
   elem.querySelector(".count").textContent = `${count}`;
   if (window.localStorage.getItem("voted") === "true") {
     document.querySelector(".star_rating").classList.add("hide");
@@ -600,16 +556,16 @@ function checkStorage(target) {
  * @returns {Boolean} - true если value неопределено
  */
 function checkValue(value) {
-  return ((Object.values(value)).some(e => e == null || undefined))
+  return ((Object.values(value)).some(e => e == null || undefined));
 }
 
-document.addEventListener('DOMContentLoaded', checkMedia)
-document.addEventListener('DOMContentLoaded', checkTheme)
-document.addEventListener('DOMContentLoaded', listenDB)
-document.addEventListener('DOMContentLoaded', showRating)
-document.addEventListener('click', toggleMenu)
-document.addEventListener('click', toggleTheme)
-document.addEventListener('click', toggleForm)
-document.querySelector('form').addEventListener('input', validateForm)
-document.querySelector('.star_rating').addEventListener('change', updateRating)
-window.addEventListener('resize', closeMenu)
+document.addEventListener("DOMContentLoaded", checkMedia);
+document.addEventListener("DOMContentLoaded", checkTheme);
+document.addEventListener("DOMContentLoaded", getRating);
+document.addEventListener("DOMContentLoaded", showRating);
+document.addEventListener("click", toggleMenu);
+document.addEventListener("click", toggleTheme);
+document.addEventListener("click", toggleForm);
+document.querySelector("form").addEventListener("input", validateForm);
+document.querySelector(".star_rating").addEventListener("change", updateRating);
+window.addEventListener("resize", closeMenu);
