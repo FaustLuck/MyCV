@@ -125,8 +125,8 @@ function toggleForm(e) {
  */
 function closeMenu() {
   if (window.matchMedia('(min-width: 768px) and (orientation:landscape)').matches) {
-    let overley_menu = document.querySelector(".overlay");
-    let flag = overley_menu.classList.contains("open");
+    let overlay_menu = document.querySelector(".overlay");
+    let flag = overlay_menu.classList.contains("open");
     if (flag) toggleMenu(null, !flag);
   }
 }
@@ -217,7 +217,7 @@ async function saveMessage() {
   let lang = document.documentElement.lang;
   showPreloader();
   let data = createData();
-  let res = await fetch(`https://englishspace-1-g1233964.deta.app/saveMessage`, {
+  let res = await fetch(`https://englishspace-1-g1233964.deta.app/cv/message`, {
     headers: {"Content-Type": "application/json"},
     method: "POST",
     body: JSON.stringify(data)
@@ -293,7 +293,7 @@ function showPreloader() {
  * Получение значения рейтинга из БД
  */
 async function getRating() {
-  let res = await fetch(`https://englishspace-1-g1233964.deta.app/getRating`);
+  let res = await fetch(`https://englishspace-1-g1233964.deta.app/cv/get`);
   if (res.ok) {
     const data = await res.json();
     showRating(data);
@@ -306,7 +306,7 @@ async function getRating() {
  */
 async function updateRating(e) {
   let value = +e.target.value;
-  let res = await fetch(`https://englishspace-1-g1233964.deta.app/addGrade/${value}`);
+  let res = await fetch(`https://englishspace-1-g1233964.deta.app/cv/${value}`);
   if (res.ok) {
     window.localStorage.setItem("voted", "true");
     const data = await res.json();
