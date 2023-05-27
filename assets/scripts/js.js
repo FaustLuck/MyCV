@@ -17,12 +17,12 @@ function toggleMenu(e, flag = true) {
 }
 
 /**
- * Скрывает/отображает значок меню 
+ * Скрывает/отображает значок меню
  * @param {Boolean} flag - если true -> скрыть значок
  */
 function toggleBurger(flag) {
-  let burger = document.querySelector('.burger');
-  burger.classList.toggle('hide', flag)
+  let burger = document.querySelector(".burger");
+  burger.classList.toggle("hide", flag);
 }
 
 /**
@@ -42,7 +42,7 @@ function toggleOverlay(flag, form = "") {
  * @param {Boolean} flag - если true -> скрыть полосы
  */
 function toggleOverflow(flag) {
-  document.body.classList.toggle('fixed', flag)
+  document.body.classList.toggle("fixed", flag);
 }
 
 /**
@@ -97,15 +97,15 @@ function toggleTheme(e) {
  * @param {Boolean} flag - если true - прячет иконку
  */
 function toggleWritingIcon(flag) {
-  let writingIcon = document.querySelector('.writing')
-  writingIcon.classList.toggle('hide', flag)
-  writingIcon.classList.remove('left')
+  let writingIcon = document.querySelector(".writing");
+  writingIcon.classList.toggle("hide", flag);
+  writingIcon.classList.remove("left");
 }
 
 /**
- * 
+ *
  * @param {Event} e - событие открытия/закрытия формы
- * @returns 
+ * @returns
  */
 function toggleForm(e) {
   if (!(e.target.closest(".writing") || e.target.closest(".close"))) return;
@@ -124,7 +124,7 @@ function toggleForm(e) {
  * Закрывает меню, если после смены ориентации оно стало прибито к потолку
  */
 function closeMenu() {
-  if (window.matchMedia('(min-width: 768px) and (orientation:landscape)').matches) {
+  if (window.matchMedia("(min-width: 768px) and (orientation:landscape)").matches) {
     let overlay_menu = document.querySelector(".overlay");
     let flag = overlay_menu.classList.contains("open");
     if (flag) toggleMenu(null, !flag);
@@ -136,11 +136,11 @@ function closeMenu() {
  * @returns {Boolean} true если проверка пройдена
  */
 function validateEmail(e) {
-  let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   let email = e.target.value;
-  let flag = email.match(regex)
-  e.target.classList.toggle('invalid', !flag)
-  return flag
+  let flag = email.match(regex);
+  e.target.classList.toggle("invalid", !flag);
+  return flag;
 }
 
 /**
@@ -150,7 +150,7 @@ function validateEmail(e) {
 function isEmpty(e) {
   let value = e.target.value;
   let flag = Boolean(value);
-  e.target.classList.toggle('invalid', !flag)
+  e.target.classList.toggle("invalid", !flag);
 }
 
 /**
@@ -158,10 +158,10 @@ function isEmpty(e) {
  */
 function validateForm() {
   let form = document.forms[0];
-  let submit = form.querySelector('.submit')
-  if (form.bucket.value) return false
-  let invalid = Boolean(form.querySelectorAll('.invalid').length)
-  submit.classList.toggle('inactive', invalid)
+  let submit = form.querySelector(".submit");
+  if (form.bucket.value) return false;
+  let invalid = Boolean(form.querySelectorAll(".invalid").length);
+  submit.classList.toggle("inactive", invalid);
   if (!invalid) submit.addEventListener("click", saveMessage);
 }
 
@@ -170,15 +170,15 @@ function validateForm() {
  */
 function addListeners() {
   let form = document.forms[0];
-  let inputs = form.querySelectorAll('input');
-  let textarea = form.querySelector('textarea');
+  let inputs = form.querySelectorAll("input");
+  let textarea = form.querySelector("textarea");
   inputs = [...inputs, textarea];
   inputs.forEach(el => {
     if (el.type === "email") return el.addEventListener("input", validateEmail);
     if (el.classList.contains("bucket")) return;
     if (el.type === "radio") return;
     el.addEventListener("input", isEmpty);
-  })
+  });
 }
 
 /**
@@ -186,8 +186,8 @@ function addListeners() {
  */
 function removeListeners() {
   let form = document.forms[0];
-  let inputs = form.querySelectorAll('input');
-  let textarea = form.querySelector('textarea');
+  let inputs = form.querySelectorAll("input");
+  let textarea = form.querySelector("textarea");
   inputs = [...inputs, textarea];
   inputs.forEach(el => {
     if (el.type === "email") return el.removeEventListener("input", validateEmail);
@@ -198,17 +198,17 @@ function removeListeners() {
 }
 
 const done = {
-  ru: 'Данные записаны',
-  en: 'Data recorded'
+  ru: "Данные записаны",
+  en: "Data recorded"
 };
 const errors = {
-  ru: 'Что-то пошло не так',
-  en: 'Something went wrong'
-}
+  ru: "Что-то пошло не так",
+  en: "Something went wrong"
+};
 const sayThanks = {
-  ru: 'Благодарю за оценку',
-  en: 'Thank you for rating'
-}
+  ru: "Благодарю за оценку",
+  en: "Thank you for rating"
+};
 
 /**
  * Отправка данных в firebase-database
@@ -241,7 +241,7 @@ function createData() {
     name: form.name.value,
     email: form.email.value,
     message: form.message.value
-  }
+  };
 }
 
 /**
@@ -268,12 +268,12 @@ function returnStyles() {
  * @param {boolean} error - ошибка записи данных в БД
  */
 function showResult(result, error = false) {
-  let preloader = document.querySelector('.preloader');
-  let output = document.querySelector('.result');
-  preloader.classList.remove('show');
-  output.classList.add('show');
-  if (error) output.classList.add('error');
-  output.textContent = result
+  let preloader = document.querySelector(".preloader");
+  let output = document.querySelector(".result");
+  preloader.classList.remove("show");
+  output.classList.add("show");
+  if (error) output.classList.add("error");
+  output.textContent = result;
 }
 
 /**
@@ -305,13 +305,13 @@ async function getRating() {
  * @param {Event} e - выбор оценки пользователя
  */
 async function updateRating(e) {
+  if (e.target.closest(".star_rating").classList.contains("hide")) return;
   let value = +e.target.value;
   let res = await fetch(`https://englishspace-1-g1233964.deta.app/cv/${value}`);
   if (res.ok) {
     window.localStorage.setItem("voted", "true");
     const data = await res.json();
     toggleRatingStyles(false, data);
-    // showRating(data);
   } else {
     e.target.checked = false;
     toggleRatingStyles(true);
@@ -360,13 +360,13 @@ function showRating({count, rating}) {
  * @param {Number} endDigit - конечное число
  */
 function scrollDigit(el, endDigit) {
-  let startTop = getTopNumber(el)
-  let endTop = endDigit * (-16)
+  let startTop = getTopNumber(el);
+  let endTop = endDigit * (-16);
   let offset = (endTop - startTop) / 100;
   let start = setInterval(() => {
-    el.style.marginTop = getTopNumber(el) + offset + 'px'
+    el.style.marginTop = getTopNumber(el) + offset + "px";
     if (getTopNumber(el) === endDigit * (-16)) clearInterval(start);
-  }, 10)
+  }, 10);
 }
 
 /**
@@ -375,8 +375,8 @@ function scrollDigit(el, endDigit) {
  * @returns {Number} margin-top элемента
  */
 function getTopNumber(el) {
-  let offset = window.getComputedStyle(el).marginTop
-  return +offset.split('px')[0]
+  let offset = window.getComputedStyle(el).marginTop;
+  return +offset.split("px")[0];
 }
 
 /**
@@ -384,7 +384,7 @@ function getTopNumber(el) {
  * @param {Number} rating - значения рейтинга
  */
 function updateRatingDigits(rating) {
-  let digits = document.querySelectorAll('.digits');
+  let digits = document.querySelectorAll(".digits");
   let ratingDigits = `${rating}`;
   ratingDigits = (ratingDigits.includes(".")) ? ratingDigits.padEnd(4, "0") : `${ratingDigits}.00`;
   ratingDigits = ratingDigits.split("").filter(e => e !== ".");
@@ -397,7 +397,7 @@ function updateRatingDigits(rating) {
  * @returns {String} HTML единой строкой
  */
 async function fetchData(el) {
-  let href = el.target.href
+  let href = el.target.href;
   let response = await fetch(href);
   let text;
   if (response.ok) {
@@ -405,7 +405,7 @@ async function fetchData(el) {
   } else {
     console.log(`Не удалось получить данные с ${href}`);
   }
-  return text
+  return text;
 }
 
 /**
@@ -414,7 +414,7 @@ async function fetchData(el) {
  * @returns {[String]} HTML разделенный на строки
  */
 function splitData(el) {
-  return el.split(/>(\\n)?(\s+)?</).filter(e => e)
+  return el.split(/>(\\n)?(\s+)?</).filter(e => e);
 }
 
 /**
@@ -426,7 +426,7 @@ function createInfo(el) {
   return {
     property: getProperty(el),
     value: getContent(el)
-  }
+  };
 }
 
 /**
@@ -436,9 +436,9 @@ function createInfo(el) {
  */
 function createOG_object(el) {
   return el
-    .filter(e => e.indexOf('og:') > -1)
-    .map(e => e.replaceAll('\"', ''))
-    .map(createInfo)
+    .filter(e => e.indexOf("og:") > -1)
+    .map(e => e.replaceAll("\"", ""))
+    .map(createInfo);
 
 }
 
@@ -463,9 +463,9 @@ function prepareData(data) {
  * @returns {String} - OG свойство
  */
 function getProperty(str) {
-  let search = 'og:';
+  let search = "og:";
   let start = str.indexOf(search);
-  let end = str.indexOf(' ', start);
+  let end = str.indexOf(" ", start);
   return str.substring(start + search.length, end);
 }
 
@@ -475,34 +475,34 @@ function getProperty(str) {
  * @returns {String} - OG значение
  */
 function getContent(str) {
-  let search = 'content=';
+  let search = "content=";
   let start = str.indexOf(search);
-  return str.substring(start + search.length, str.length)
+  return str.substring(start + search.length, str.length);
 }
 
 /**
  * если устройство пользователя может выполнить hover, показать примеры сайтов
  */
 async function checkMedia() {
-  if (!window.matchMedia('(any-hover: hover)').matches) return;
-  let examples = document.querySelectorAll('.example')
-  examples = Array.from(examples)
-  let tmp = examples.map(checkStorage)
+  if (!window.matchMedia("(any-hover: hover)").matches) return;
+  let examples = document.querySelectorAll(".example");
+  examples = Array.from(examples);
+  let tmp = examples.map(checkStorage);
   let readyToAdd = [];
   let mustFetch = [];
   tmp.forEach(e => {
-    (e.hasOwnProperty('src')) ? readyToAdd.push(e) : mustFetch.push(e)
-  })
+    (e.hasOwnProperty("src")) ? readyToAdd.push(e) : mustFetch.push(e);
+  });
   if (mustFetch.length) {
-    mustFetch = await Promise.all([...mustFetch].map(fetchData))
-    mustFetch = mustFetch.map(splitData).map(createOG_object).map(prepareData)
-    saveData(mustFetch)
+    mustFetch = await Promise.all([...mustFetch].map(fetchData));
+    mustFetch = mustFetch.map(splitData).map(createOG_object).map(prepareData);
+    saveData(mustFetch);
     mustFetch.map(el => {
       el.target = examples.find(e => e.text === el.title);
-    })
+    });
   }
-  readyToAdd = [...readyToAdd, ...mustFetch]
-  readyToAdd.forEach(addData)
+  readyToAdd = [...readyToAdd, ...mustFetch];
+  readyToAdd.forEach(addData);
 }
 
 /**
@@ -514,9 +514,9 @@ function saveData(array) {
     let obj = {
       description: el.description,
       src: el.src
-    }
-    window.localStorage.setItem(el.title, JSON.stringify(obj))
-  })
+    };
+    window.localStorage.setItem(el.title, JSON.stringify(obj));
+  });
 }
 
 /**
@@ -524,15 +524,15 @@ function saveData(array) {
  * @param {Object} data - данные
  */
 function addData(data) {
-  let target = data.target.closest('.examples__item');
-  let preview = target.querySelector('.empty')
-  let title = target.querySelector('.preview_title');
-  let description = target.querySelector('.preview_description');
-  let img = target.querySelector('.preview_img');
+  let target = data.target.closest(".examples__item");
+  let preview = target.querySelector(".empty");
+  let title = target.querySelector(".preview_title");
+  let description = target.querySelector(".preview_description");
+  let img = target.querySelector(".preview_img");
   title.textContent = data.title;
   description.textContent = data.description;
   img.src = data.src;
-  preview.classList.remove('empty')
+  preview.classList.remove("empty");
 }
 
 /**
@@ -546,7 +546,7 @@ function checkStorage(target) {
   let output = {...obj};
   output.target = target;
   output.title = target.textContent;
-  return (checkValue(output)) ? target : output
+  return (checkValue(output)) ? target : output;
 }
 
 /**
