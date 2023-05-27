@@ -136,7 +136,7 @@ function closeMenu() {
  * @returns {Boolean} true если проверка пройдена
  */
 function validateEmail(e) {
-  let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  let regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   let email = e.target.value;
   let flag = email.match(regex);
   e.target.classList.toggle("invalid", !flag);
